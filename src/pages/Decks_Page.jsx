@@ -2,27 +2,21 @@ import FlashCard from "../components/FlashCard"
 import Deck from "../components/Deck"
 
 
-function Decks_Page(deck_array){
+function Decks_Page({ deck_array, Dselected_deck }) {
 
 
-    const this_deck = [
-        {id:1, front : "What is React?", back: "A JavaScript library for building user interfaces."},
-        {id:2, front : "What is a component?", back: "A reusable piece of UI in React."},
-        {id:3, front : "What is state in React?", back: "An object that determines how a component renders and behaves."},
-    ]
 
 
-    return ( 
-    
-        <div className="decks"> 
-            <div className="deck-grid">
-                <Deck deck_name = "React" cards = {this_deck} />
-            </div>
-        </div>
-
+    return (
+        <select onChange={(e) => Dselected_deck(e.target.value)} defaultValue="">
+        <option value="" disabled>Select a Deck</option>
+        {deck_array.map(deck => (
+            <option key={deck.id} value={deck.deck_name}>
+            {deck.deck_name}
+            </option>
+        ))}
+        </select>
     );
-
 }
-
 
 export default Decks_Page
