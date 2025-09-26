@@ -17,21 +17,6 @@ A simple React-based flashcards app where you can select a deck and flip through
 git clone https://github.com/IALT1234/SPEAR.git
 cd SPEAR
 npm install
-# SPEAR — Flashcards app
-
-A small React app for studying with flashcards. Pick a deck, flip cards to reveal answers, and navigate between cards.
-
-## Quick start
-
-Prerequisites: Node.js (recommended 16+ or latest LTS) and npm.
-
-Clone and run locally:
-
-```bash
-git clone https://github.com/IALT1234/SPEAR.git
-cd SPEAR/flashcards-app
-npm install
-npm run dev
 ```
 
 Available scripts (see `package.json`):
@@ -71,15 +56,7 @@ CSS modules:
 
 Assets live in `src/assets/`.
 
-## Features
-
-- Flip cards to reveal answers (click / tap)
-- Multiple decks (example decks: React, Math, History)
-- Previous / next navigation with wrapping (carousel behavior)
-- Deck selection bar for quick switching
-- Plain CSS styling for a clean, card-like UI
-
-## Roadmap / Future features
+## Roadmap
 
 Short term:
 - Add UI to create and edit decks
