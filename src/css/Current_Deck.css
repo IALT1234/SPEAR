@@ -3,28 +3,33 @@
   align-items: center;
   justify-content: center;
   margin-top: 50px;
-  gap: 80px;
+  gap: 120px; /* more space between arrows and card */
 }
 
-/* Bigger arrows */
+/* Left Arrow */
 .nav-button.left {
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 120px 150px 120px 0;
-  border-color: transparent #e0aa6d transparent transparent;
+  border-width: 80px 100px 80px 0; /* taller + sharper */
+  border-color: transparent #e0aa6d transparent transparent; /* dark brown fill */
   cursor: pointer;
+
+  transition: transform 0.2s;
 }
 
+/* Right Arrow */
 .nav-button.right {
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 120px 0 120px 150px;
+  border-width: 80px 0 80px 100px;
   border-color: transparent transparent transparent #e0aa6d;
   cursor: pointer;
+  transition: transform 0.2s;
 }
 
 .nav-button:hover {
-  filter: brightness(0.9);
+  transform: scale(1.15);
+  filter: brightness(1.1);
 }

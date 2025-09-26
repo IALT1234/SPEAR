@@ -1,8 +1,6 @@
 import FlashCard from "../components/FlashCard"
-import Deck from "../components/Deck"
 import { useState } from "react";
 import "../css/Current_Deck.css";
-
 
 function Current_Deck({ deck }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -22,9 +20,8 @@ function Current_Deck({ deck }) {
 
   return (
     <div className="deck-container">
-      <button className="nav-button" onClick={prevCard}>
-        ⬅
-      </button>
+      {/* Left arrow */}
+      <div className="nav-button left" onClick={prevCard}></div>
 
       <FlashCard
         key={cards[currentIndex].id}
@@ -32,9 +29,8 @@ function Current_Deck({ deck }) {
         card_back={cards[currentIndex].back}
       />
 
-      <button className="nav-button" onClick={nextCard}>
-        ➡
-      </button>
+      {/* Right arrow */}
+      <div className="nav-button right" onClick={nextCard}></div>
     </div>
   );
 }
