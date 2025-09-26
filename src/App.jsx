@@ -1,5 +1,4 @@
 
-import './App.css'
 import Decks_Page from './pages/Decks_Page'
 import Current_Deck from './pages/Current_Deck'
 import FlashCard from './components/FlashCard'
