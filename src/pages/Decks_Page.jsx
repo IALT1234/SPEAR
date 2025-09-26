@@ -2,18 +2,20 @@ import FlashCard from "../components/FlashCard"
 import Deck from "../components/Deck"
 
 
-function Decks_Page({deck_array}){
+function Decks_Page({ deck_array, Dselected_deck }) {
 
 
-    return ( 
-    
-        <div className="decks"> 
 
-            {deck_array.map((deck_array) => (
-                <Deck deck_name={deck_array.deck_name} cards={deck_array.app_deck_array} key={deck_array.id} />
-            ))}
-        </div>
 
+    return (
+        <select onChange={(e) => Dselected_deck(e.target.value)} defaultValue="">
+        <option value="" disabled>Select a Deck</option>
+        {deck_array.map(deck => (
+            <option key={deck.id} value={deck.deck_name}>
+            {deck.deck_name}
+            </option>
+        ))}
+        </select>
     );
 }
 

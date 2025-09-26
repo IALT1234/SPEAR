@@ -3,8 +3,13 @@ import './App.css'
 import Decks_Page from './pages/Decks_Page'
 import Current_Deck from './pages/Current_Deck'
 import FlashCard from './components/FlashCard'
+import React, { useState, useEffect } from 'react';
 
 function App() {
+
+    const [selected_deck, setSelectedDeck] = useState('');
+
+
 
     const this_deck = [
         {id:1, front : "What is React?", back: "A JavaScript library for building user interfaces."},
@@ -14,10 +19,10 @@ function App() {
     const this_deck2 = [
         {id:1, front : "2 + 2", back: "4"},
         {id:2, front : "4 x 4", back: "16"},
-        {id:3, front : "20 - 15", back: "5"},
+        {id:3, front : "20 - 15", back: "15"},
     ]
     const this_deck3 = [
-        {id:1, front : "What is OTAN", back: "Organization of the North Atlantic Treaty"},
+        {id:1, front : "What is NATO", back: "North Atlantic Treaty Organization"},
         {id:2, front : "What is a USSR?", back: "Union of Soviet Socialist Republics"},
         {id:3, front : "What is BRICS", back: "Brazil, Russia, India, China, South Africa."},
     ]
@@ -27,12 +32,14 @@ function App() {
     { id: 2, deck_name: "Math", app_deck_array: this_deck2 },
     { id: 3, deck_name: "History", app_deck_array: this_deck3 },
   ]
+  
+  const selectedDeckObject = deck_array_.find(deck => deck.deck_name === selected_deck);
 
 
   return (
     <>
-      <Decks_Page deck_array = {deck_array_}/>
-      <Current_Deck />
+      <Decks_Page deck_array = {deck_array_} Dselected_deck = {setSelectedDeck}/>
+      <Current_Deck deck = {selectedDeckObject}/>
     </>
   )
 }
