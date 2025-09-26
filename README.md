@@ -4,8 +4,8 @@ A simple React-based flashcards app where you can select a deck and flip through
 
 ### Features
 - Flip cards to see the answer (click on the flashcard).  
-- Multiple decks available (React, Math, History).  
-- Navigate between cards with previous/next arrows (carousel loop).  
+- Multiple decks available.  
+- Navigate between cards with previous/next arrows.  
 - Decks are selectable from a top deck bar.  
 - Styled with vanilla CSS to match a card-style learning tool.  
 
