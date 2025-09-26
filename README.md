@@ -1,12 +1,53 @@
-# React + Vite
+SPEAR
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple React-based flashcards app where you can select a deck and flip through cards.
+Features
+  Flip cards to see the answer (click on the flashcard).
+  Multiple decks available (React, Math, History)
+  Navigate between cards with previous/next arrows (carousel loop).
+  Decks are selectable from a top deck bar.
+  Styled with vanilla CSS to match a card-style learning tool.
 
-Currently, two official plugins are available:
+Commands to try the app:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+  git clone https://github.com/IALT1234/SPEAR.git
+  cd SPEAR
+  npm install
+  npm run dev
 
-## Expanding the ESLint configuration
+Project Structure
+  src/
+  │── components/
+  │   ├── FlashCard.jsx     # Single flashcard (front/back flip)
+  │   ├── Deck.jsx          # Deck wrapper (not always needed, but expandable)
+  │
+  │── pages/
+  │   ├── Decks_Page.jsx    # Top deck selector bar
+  │   ├── Current_Deck.jsx  # Shows selected deck cards with navigation
+  │
+  │── App.jsx               # Main entry point
+  │── App.css               # Global styles
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+Future features:
+  Short-term:
+    Create decks
+    Store decks in database (maybe Firebase)
+    Customize Decks
+  Medium-term:
+    Include decks from API 
+    Add dynamic animations
+  Long-term:
+    Add statistics function:
+      Progress
+      Time
+    Customize each deck
+    Add a trivia mode 
+      If this clashes with the simplicity of Spear I might use the base code of this app to create a different one
+    
+
+
+      
+    
+    
+  
