@@ -1,12 +1,101 @@
-# React + Vite
+# SPEAR
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple React-based flashcards app where you can select a deck and flip through cards.  
 
-Currently, two official plugins are available:
+### Features
+- Flip cards to see the answer (click on the flashcard).  
+- Multiple decks available (React, Math, History).  
+- Navigate between cards with previous/next arrows (carousel loop).  
+- Decks are selectable from a top deck bar.  
+- Styled with vanilla CSS to match a card-style learning tool.  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+### Commands to try the app:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+git clone https://github.com/IALT1234/SPEAR.git
+cd SPEAR
+npm install
+# SPEAR — Flashcards app
+
+A small React app for studying with flashcards. Pick a deck, flip cards to reveal answers, and navigate between cards.
+
+## Quick start
+
+Prerequisites: Node.js (recommended 16+ or latest LTS) and npm.
+
+Clone and run locally:
+
+```bash
+git clone https://github.com/IALT1234/SPEAR.git
+cd SPEAR/flashcards-app
+npm install
+npm run dev
+```
+
+Available scripts (see `package.json`):
+
+- `npm run dev` — start Vite dev server
+- `npm run build` — build production bundle
+- `npm run preview` — preview the production build locally
+- `npm run lint` — run ESLint across the project
+
+## Project structure
+
+Top-level files:
+
+- `index.html` — Vite entry HTML
+- `package.json` — project metadata and scripts
+- `vite.config.js` — Vite configuration
+
+Main source tree (`src/`):
+
+- `src/main.jsx` — app bootstrap and router (if used)
+- `src/App.jsx` — application root
+- `src/index.css`, `src/App.css` — global styles
+
+Components:
+
+- `src/components/FlashCard.jsx` — single flashcard (front/back flip)
+- `src/components/Deck.jsx` — deck wrapper / deck selector UI
+
+Pages:
+
+- `src/pages/Decks_Page.jsx` — deck selection bar / landing
+- `src/pages/Current_Deck.jsx` — shows cards for the selected deck with navigation
+
+CSS modules:
+
+- `src/css/FlashCard.css`, `src/css/Decks_Page.css`, `src/css/Current_Deck.css`
+
+Assets live in `src/assets/`.
+
+## Features
+
+- Flip cards to reveal answers (click / tap)
+- Multiple decks (example decks: React, Math, History)
+- Previous / next navigation with wrapping (carousel behavior)
+- Deck selection bar for quick switching
+- Plain CSS styling for a clean, card-like UI
+
+## Roadmap / Future features
+
+Short term:
+- Add UI to create and edit decks
+- Persist decks to a backend (Firebase or local storage)
+
+Medium term:
+- Import decks from an API
+- Add animated transitions and improved mobile UI
+
+Long term:
+- Study statistics (progress, time spent)
+- Quiz/trivia modes and deeper customization
+
+## Notes
+
+- This repo uses Vite + React. If something fails to start, ensure dependencies are installed and Node.js is up to date.
+
+---
+

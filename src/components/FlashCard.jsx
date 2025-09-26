@@ -1,22 +1,18 @@
-import { useState } from 'react';
+import { useState } from "react";
+import "../css/FlashCard.css";
 
-function FlashCard({card_front, card_back}) {
+function FlashCard({ card_front, card_back }) {
+  const [flipped, setFlipped] = useState(false);
 
-    // State to track if the card is flipped or not
-    const [flipped, setFlipped] = useState(false);
+  function cardClicked() {
+    setFlipped((f) => !f);
+  }
 
-    function cardClicked() {
-        setFlipped(f => !f);
-    }
-
-    return (
-        <div className="flash-card">
-            {/* This button uses the flipped boolean to show a side of the flashcard */}
-            <button className={`flash-card-front${flipped ? ' flipped' : ''}`} onClick={cardClicked}>
-                {flipped ? card_back : card_front}
-            </button>
-        </div>
-    );
+  return (
+    <div className="flash-card" onClick={cardClicked}>
+      {flipped ? card_back : card_front}
+    </div>
+  );
 }
 
-export default FlashCard
+export default FlashCard;

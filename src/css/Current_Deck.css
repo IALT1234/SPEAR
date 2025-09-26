@@ -3,41 +3,26 @@
   align-items: center;
   justify-content: center;
   margin-top: 50px;
-  gap: 60px;              
+  gap: 80px;
 }
 
-.flash-card {
-  width: 600px;          
-  height: 350px;
-  background-color: #e0aa6d;
-  border: 3px solid #2b251e;
-  border-radius: 90px;
-  font-size: 32px;       
-  font-weight: bold;
-  color: #ccc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 5px 5px 10px rgba(99, 42, 42, 0.3);
-  text-align: center;
-}
-
-.nav-button {
+/* Bigger arrows */
+.nav-button.left {
   width: 0;
   height: 0;
   border-style: solid;
-  cursor: pointer;
-  background: none;
-}
-
-.nav-button.left {
-  border-width: 100px 120px 100px 0;   
+  border-width: 120px 150px 120px 0;
   border-color: transparent #e0aa6d transparent transparent;
+  cursor: pointer;
 }
 
 .nav-button.right {
-  border-width: 100px 0 100px 120px;  
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 120px 0 120px 150px;
   border-color: transparent transparent transparent #e0aa6d;
+  cursor: pointer;
 }
 
 .nav-button:hover {
