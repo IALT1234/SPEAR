@@ -74,7 +74,13 @@ function App() {
       )
     );
   }
+  function deleteDeck(deckName) {
+    set_all_decks(prev => prev.filter(deck => deck.deck_name !== deckName));
 
+    if (selected_deck === deckName) {
+      setSelectedDeck(""); // clear selection if deleted
+    }
+  }
 
   const selectedDeckObject = all_decks.find(deck => deck.deck_name === selected_deck);
 
@@ -87,6 +93,7 @@ function App() {
         addDeck={addDeck}
         addCard={addCard}
         deleteCard={deleteCard}
+        deleteDeck={deleteDeck}
         currentIndex={currentIndex}
       />
       <Current_Deck deck={selectedDeckObject} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} />

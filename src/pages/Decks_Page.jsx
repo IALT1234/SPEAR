@@ -78,9 +78,8 @@ function Decks_Page(props) {
               <button className="option-button" onClick={add_card_clicked}>ADD<br />CARD</button>
               <button className="option-button" onClick={handleDeleteCard}>DELETE<br />CARD</button>
               <button className="option-button" onClick={add_deck_clicked}>CREATE<br />DECK</button>
-              <button className="option-button arrow-button" onClick={options_clicked}>
-                <span className="arrow">&#8634;</span>
-              </button>
+              <button className="option-button" onClick={() => props.deleteDeck(props.selectedDeck)}> DELETE<br />DECK </button>
+              <button className="option-button arrow-button" onClick={options_clicked}> <span className="arrow">&#8634;</span> </button>
             </>
           )}
         </div>
