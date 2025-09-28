@@ -131,3 +131,45 @@
 .deck-buttons-wrapper::-webkit-scrollbar {
   display: none;
 }
+.options-area {
+  display: flex;
+  align-items: center;
+  border-left: 3px solid #4a4033;
+  padding-left: 30px;
+  margin-left: 20px;
+  flex-shrink: 0;
+}
+
+.options-expanded {
+  display: flex;
+  gap: 15px;
+  flex-wrap: nowrap;
+}
+
+.menu-item {
+  background: #fff7e6;
+  border: 3px solid #4a4033;
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4a4033;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.menu-item:hover {
+  background-color: #f3e3c3;
+}
+
+.cancel-button {
+  background-color: #f5dada;
+  color: #8a2b2b;
+  border-color: #a94442;
+}
+
+.cancel-button:hover {
+  background-color: #e4bcbc;
+}
+
+/* Keep existing styles for .deck-bar, .deck-button, etc. */

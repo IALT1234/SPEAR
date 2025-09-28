@@ -47,54 +47,56 @@ function Decks_Page(props) {
   }
 
   return (
-  <div> 
-  <div className="deck-bar">  
-    <div className="deck-buttons-wrapper">
-      <div className="deck-buttons-container">
-        {props.deck_array.map(deck => (
-          <div className="deck-button-wrapper" key={deck.id}>
-            <button
-              className={`deck-button ${props.Dselected_deck === deck.deck_name ? "active" : ""}`}
-              onClick={() => props.Dselected_deck(deck.deck_name)}
-            >
-              {deck.deck_name}
-            </button>
-            {props.Dselected_deck === deck.deck_name && <div className="active-underline" />}
+    <div>
+      <div className="deck-bar">
+        <div className="deck-buttons-wrapper">
+          <div className="deck-buttons-container">
+            {props.deck_array.map(deck => (
+              <div className="deck-button-wrapper" key={deck.id}>
+                <button
+                  className={`deck-button ${props.Dselected_deck === deck.deck_name ? "active" : ""}`}
+                  onClick={() => props.Dselected_deck(deck.deck_name)}
+                >
+                  {deck.deck_name}
+                </button>
+                {props.Dselected_deck === deck.deck_name && <div className="active-underline" />}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
+        </div>
 
-    <div className="options-area">
-      <div className="dots-button" onClick={() => options_clicked()}>
-        <div className="dot" />
-        <div className="dot" />
-        <div className="dot" />
+        <div className="options-area">
+          {!clicked_options ? (
+            <div className="dots-button" onClick={options_clicked}>
+              <div className="dot" />
+              <div className="dot" />
+              <div className="dot" />
+            </div>
+          ) : (
+            <div className="options-expanded">
+              <button className="menu-item" onClick={add_deck_clicked}>Add Deck</button>
+              <button className="menu-item" onClick={add_card_clicked}>Add Card</button>
+              <button className="menu-item" onClick={handleDeleteCard}>Delete Card</button>
+              <button className="menu-item cancel-button" onClick={options_clicked}>Cancel</button>
+            </div>
+          )}
+        </div>
       </div>
 
-      {clicked_options && (
-        <div className="options-menu">
-          <button className="menu-item" onClick={() => add_deck_clicked()}>Add Deck</button>
-          <button className="menu-item" onClick={() => add_card_clicked()}>Add Card</button>
-          <button className="menu-item" onClick={handleDeleteCard}>Delete Card</button>
+      {clicked_add_deck && (
+        <div className="form-wrapper">
+          <NewDeckForm addDeck={props.addDeck} />
+        </div>
+      )}
+
+      {clicked_add_card && (
+        <div className="form-wrapper">
+          <NewCardForm addCard={props.addCard} deckName={props.selectedDeck} />
         </div>
       )}
     </div>
-  </div>
-  {clicked_add_deck && (
-    <div className="form-wrapper">
-      <NewDeckForm addDeck={props.addDeck} />
-    </div>
-  )}
-
-  {clicked_add_card && (
-    <div className="form-wrapper">
-      <NewCardForm addCard={props.addCard} deckName={props.selectedDeck} />
-    </div>
-  )}
-  </div>
-        
   );
+
 }
 
 
