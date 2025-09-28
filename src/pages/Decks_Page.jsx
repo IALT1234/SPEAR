@@ -65,7 +65,8 @@ function Decks_Page(props) {
           </div>
         </div>
 
-        <div className="options-area">
+
+        <div className={`options-area ${clicked_options ? "expanded" : ""}`}>
           {!clicked_options ? (
             <div className="dots-button" onClick={options_clicked}>
               <div className="dot" />
@@ -73,15 +74,20 @@ function Decks_Page(props) {
               <div className="dot" />
             </div>
           ) : (
-            <div className="options-expanded">
-              <button className="menu-item" onClick={add_deck_clicked}>Add Deck</button>
-              <button className="menu-item" onClick={add_card_clicked}>Add Card</button>
-              <button className="menu-item" onClick={handleDeleteCard}>Delete Card</button>
-              <button className="menu-item cancel-button" onClick={options_clicked}>Cancel</button>
-            </div>
+            <>
+              <button className="option-button" onClick={add_card_clicked}>ADD<br />CARD</button>
+              <button className="option-button" onClick={handleDeleteCard}>DELETE<br />CARD</button>
+              <button className="option-button" onClick={add_deck_clicked}>CREATE<br />DECK</button>
+              <button className="option-button arrow-button" onClick={options_clicked}>
+                <span className="arrow">&#8634;</span>
+              </button>
+            </>
           )}
         </div>
+
       </div>
+
+
 
       {clicked_add_deck && (
         <div className="form-wrapper">
