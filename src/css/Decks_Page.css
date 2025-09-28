@@ -63,19 +63,23 @@
 
 .dots-button {
   display: flex;
-  flex-direction: row;
-  gap: 8px;
-  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  background-color: #e0aa6d;
+  border: 2px solid #4a4033;
+  width: 100%;
+  height: 100%;
   cursor: pointer;
-  background: none;
-  border: none;
+  box-sizing: border-box;
+  border-radius: 0;
 }
 
 .dot {
   width: 10px;
   height: 10px;
   background-color: #4a4033;
-  border-radius: 2px;
+  border-radius: 1px;
+  margin: 0 4px;
 }
 
 .menu-item {
@@ -96,21 +100,14 @@
 .deck-buttons-wrapper::-webkit-scrollbar {
   display: none;
 }
-.options-area {
-  flex: 0 0 220px;               /* always same width as expanded */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-left: 5px solid #4a4033;
-  height: 100%;
-  padding: 0;
-  background-color: #e0aa6d;    
-}
 
 .options-area.expanded {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 80px;
   grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "createDeck addCard arrow"
+    "deleteDeck deleteCard arrow";
 }
 .menu-item {
   background: #fff7e6;
@@ -149,7 +146,7 @@
   font-size: 1.2rem;
   background-color: #e0aa6d;
   color: white;
-  border: 2px solid #4a4033;     /* creates grid lines */
+  border: 2px solid #4a4033;     /* grid lines */
   border-radius: 0;
   margin: 0;
   padding: 0;
@@ -175,4 +172,33 @@
 .arrow {
   display: inline-block;
   transform: rotate(-45deg);
+}
+
+.option-create-deck { grid-area: createDeck; }
+.option-add-card     { grid-area: addCard; }
+.option-delete-deck  { grid-area: deleteDeck; }
+.option-delete-card  { grid-area: deleteCard; }
+.option-close        { grid-area: arrow; }
+
+
+
+.option-close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.options-area {
+  width: 30%;          
+  height: 100%;        
+  background-color: #e0aa6d;
+  border-left: 5px solid #4a4033;
+}
+
+
+.options-area:not(.expanded) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
