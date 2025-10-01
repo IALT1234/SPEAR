@@ -59,8 +59,9 @@ Assets live in `src/assets/`.
 ## Roadmap
 
 Short term:
-- Add UI to create and edit decks
-- Persist decks to a backend (Firebase or local storage)
+
+- Persist decks to a Firebase database (local storage already handled)
+- Polish UI functionality and design
 
 Medium term:
 - Import decks from an API
