@@ -8,7 +8,7 @@ function App() {
   const defaultDecks = [
     {
       id: 1,
-      deck_name: "React",
+      deck_name: "REACT",
       app_deck_array: [
         { id: 1, front: "What is React?", back: "A JavaScript library for building UIs." },
         { id: 2, front: "What is a component?", back: "A reusable piece of UI in React." },
@@ -17,7 +17,7 @@ function App() {
     },
     {
       id: 2,
-      deck_name: "Math",
+      deck_name: "MATH",
       app_deck_array: [
         { id: 1, front: "2 + 2", back: "4" },
         { id: 2, front: "4 x 4", back: "16" },
@@ -26,7 +26,7 @@ function App() {
     },
     {
       id: 3,
-      deck_name: "History",
+      deck_name: "HISTORY",
       app_deck_array: [
         { id: 1, front: "What is NATO?", back: "North Atlantic Treaty Organization" },
         { id: 2, front: "What was the USSR?", back: "Union of Soviet Socialist Republics" },

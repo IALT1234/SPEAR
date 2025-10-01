@@ -1,3 +1,8 @@
+/* ===========================
+   DECK BAR CONTAINER
+   Affects: <div className="deck-bar">
+   Description: Horizontal bar containing deck buttons + options menu
+=========================== */
 .deck-bar {
   display: flex;
   background-color: #e0aa6d;
@@ -8,49 +13,88 @@
   max-width: 1200px;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
   overflow: hidden;
-  height: 140px;       /* fixed height for bar */
-  padding: 0;        
-} 
+  height: 140px;
+  padding: 0;
+}
 
+
+/* ===========================
+   DECK BUTTONS SCROLL WRAPPER
+   Affects: <div className="deck-buttons-wrapper">
+   Description: Scrollable horizontal wrapper for all deck buttons
+=========================== */
 .deck-buttons-wrapper {
   overflow-x: auto;
   flex: 1 1 auto;
   display: flex;
   align-items: center;
 }
-
-.deck-buttons-container {
-  display: inline-flex;
-  gap: 20px;
-  flex-wrap: nowrap;
-  white-space: nowrap;
+.deck-buttons-wrapper::-webkit-scrollbar {
+  display: none;
 }
 
+
+/* ===========================
+   DECK BUTTONS CONTAINER
+   Affects: <div className="deck-buttons-container">
+   Description: Holds all individual deck button wrappers
+=========================== */
+.deck-buttons-container {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  height: 100%;
+}
+
+
+/* ===========================
+   INDIVIDUAL DECK BUTTON WRAPPER
+   Affects: <div className="deck-button-wrapper">
+   Description: Holds deck button + active underline
+=========================== */
 .deck-button-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   flex-shrink: 0;
+  border: 0px;
+  width: 150px;
 }
 
+
+/* ===========================
+   INDIVIDUAL DECK BUTTON
+   Affects: <button className="deck-button">
+=========================== */
 .deck-button {
-  padding: 18px 36px;
-  background-color: #777;
+  font-family: 'Caveat', cursive;
+  font-weight: bold;
+  font-size: 1.2rem;
+  background-color: #e0aa6d;
   color: white;
-  font-size: 16px;
-  font-weight: 600;
-  border-radius: 20px;
-  border: 3px solid #4a4033;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  white-space: nowrap;
-}
+  border: 2px solid #4a4033;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  white-space: pre-line;
+  box-sizing: border-box;
 
+}
 .deck-button:hover {
-  background-color: #666;
+  background-color: #d49b50;
 }
 
 
+/* ===========================
+   ACTIVE DECK INDICATOR
+   Affects: <div className="active-underline">
+=========================== */
 .active-underline {
   margin-top: 5px;
   height: 5px;
@@ -60,7 +104,153 @@
 }
 
 
+/* ===========================
+   OPTIONS PANEL (RIGHT SIDE)
+   Affects: <div className="options-area">
+=========================== */
+.options-area {
+  /* Fixed width in pixels - change 320px to your desired fixed width */
+  width: 320px;
 
+  height: 100%;
+  background-color: #e0aa6d;
+  border-left: 4px solid #4a4033;
+  border-top: 0px solid #e0aa6d;
+  /* Prevent shrinking when inside a flex container */
+  flex: 0 0 320px;
+  box-sizing: border-box;
+
+}
+
+/* Default (collapsed) state - shows 3-dot button */
+.options-area:not(.expanded) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+
+/* Expanded state with grid layout for buttons */
+.options-area.expanded {
+  display: grid;
+  grid-template-columns: 1fr 1fr 80px;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "createDeck addCard arrow"
+    "deleteDeck deleteCard arrow";
+}
+
+
+/* ===========================
+   OPTIONS PANEL BUTTONS
+   Affects: Buttons like CREATE DECK, ADD CARD, etc.
+   JSX: <button className="option-button option-create-deck">...
+=========================== */
+.option-button {
+  font-family: 'Caveat', cursive;
+  font-weight: bold;
+  font-size: 1.2rem;
+  background-color: #e0aa6d;
+  color: white;
+  border: 2px solid #4a4033;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  white-space: pre-line;
+  box-sizing: border-box;
+}
+
+
+.back_from_dock_options{
+  font-family: 'Caveat', cursive;
+  font-weight: bold;
+  font-size: 1.2rem;
+  background-color: #e0aa6d;
+  color: white;
+  border: 2px solid #4a4033;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  white-space: pre-line;
+  box-sizing: border-box;
+}
+
+
+.new-deck-form-container{
+  font-family: 'Caveat', cursive;
+  font-weight: bold;
+  font-size: 1.2rem;
+  background-color: #e0aa6d;
+  color: white;
+  border: 2px solid #4a4033;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  white-space: pre-line;
+  box-sizing: border-box;
+}
+
+.option-button:hover {
+  background-color: #d49b50;
+}
+
+/* Optional override for arrow (↩) button */
+.arrow-button {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+/* Used for ↩ arrow rotation in close button */
+.arrow {
+  display: inline-block;
+  transform: rotate(-45deg);
+}
+
+
+/* ===========================
+   GRID AREA MAPPING (OPTION BUTTONS)
+   Description: Assigns each button to a grid cell
+=========================== */
+.option-create-deck { grid-area: createDeck; }
+.option-add-card    { grid-area: addCard; }
+.option-delete-deck { grid-area: deleteDeck; }
+.option-delete-card { grid-area: deleteCard; }
+.option-close       { grid-area: arrow; }
+
+
+
+
+/* Specific layout for the close (↩) button */
+.option-close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* ===========================
+   ⋯ THREE-DOT MENU BUTTON
+   Affects: <div className="dots-button">
+=========================== */
 .dots-button {
   display: flex;
   justify-content: center;
@@ -74,6 +264,7 @@
   border-radius: 0;
 }
 
+/* Individual dot inside ⋯ menu */
 .dot {
   width: 10px;
   height: 10px;
@@ -82,33 +273,11 @@
   margin: 0 4px;
 }
 
-.menu-item {
-  background: #fff7e6;
-  border: 2px solid #4a4033;
-  border-radius: 8px;
-  padding: 8px 12px;
-  cursor: pointer;
-  font-weight: 600;
-  color: #4a4033;
-  transition: background 0.2s;
-}
 
-.menu-item:hover {
-  background-color: #f3e3c3;
-}
-
-.deck-buttons-wrapper::-webkit-scrollbar {
-  display: none;
-}
-
-.options-area.expanded {
-  display: grid;
-  grid-template-columns: 1fr 1fr 80px;
-  grid-template-rows: 1fr 1fr;
-  grid-template-areas:
-    "createDeck addCard arrow"
-    "deleteDeck deleteCard arrow";
-}
+/* ===========================
+   MENU ITEM STYLING (Unused in Decks_Page.jsx)
+   Possibly used elsewhere
+=========================== */
 .menu-item {
   background: #fff7e6;
   border: 3px solid #4a4033;
@@ -127,78 +296,17 @@
   background-color: #f3e3c3;
 }
 
-.cancel-button {
-  background-color: #f5dada;
-  color: #8a2b2b;
-  border-color: #a94442;
-}
-
-.cancel-button:hover {
-  background-color: #e4bcbc;
-}
 
 
 
 
-.option-button {
-  font-family: 'Caveat', cursive;
-  font-weight: bold;
-  font-size: 1.2rem;
-  background-color: #e0aa6d;
-  color: white;
-  border: 2px solid #4a4033;     /* grid lines */
-  border-radius: 0;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  white-space: pre-line;
-  box-sizing: border-box;
-}
-
-.option-button:hover {
-  background-color: #d49b50;
-}
-
-.arrow-button {
-  font-size: 1.5rem;
-  line-height: 1;
-}
-
-.arrow {
-  display: inline-block;
-  transform: rotate(-45deg);
-}
-
-.option-create-deck { grid-area: createDeck; }
-.option-add-card     { grid-area: addCard; }
-.option-delete-deck  { grid-area: deleteDeck; }
-.option-delete-card  { grid-area: deleteCard; }
-.option-close        { grid-area: arrow; }
 
 
 
-.option-close {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 
-.options-area {
-  width: 30%;          
-  height: 100%;        
-  background-color: #e0aa6d;
-  border-left: 5px solid #4a4033;
-}
 
 
-.options-area:not(.expanded) {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
+
+

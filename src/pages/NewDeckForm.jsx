@@ -19,6 +19,7 @@ function NewDeckForm({ addDeck }) {
   return (
     <form onSubmit={handleSubmit} className="new-deck-form">
       <input
+        className="new-deck-form_input"
         type="text"
         placeholder="Enter deck name"
         value={name}

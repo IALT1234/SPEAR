@@ -1,34 +1,39 @@
+/* Container for current deck flashcard with arrows */
 .deck-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 50px;
-  gap: 120px; /* more space between arrows and card */
+display: flex;
+align-items: center;
+justify-content: center;
+margin-top: 50px;
+gap: 120px; /* more space between arrows and card */
 }
 
-/* Left Arrow */
+
+/* Left arrow button styling */
 .nav-button.left {
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 120px 140px 120px 0; /* taller + sharper */
-  border-color: transparent #e0aa6d transparent transparent; /* dark brown fill */
-  cursor: pointer;
-  transition: transform 0.2s;
+width: 0;
+height: 0;
+border-style: solid;
+border-width: 120px 140px 120px 0; /* triangle shape */
+border-color: transparent #e0aa6d transparent transparent;
+cursor: pointer;
+transition: transform 0.2s;
 }
 
-/* Right Arrow */
+
+/* Right arrow button styling */
 .nav-button.right {
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 120px 0 120px 140px;
-  border-color: transparent transparent transparent #e0aa6d;
-  cursor: pointer;
-  transition: transform 0.2s;
+width: 0;
+height: 0;
+border-style: solid;
+border-width: 120px 0 120px 140px; /* triangle shape */
+border-color: transparent transparent transparent #e0aa6d;
+cursor: pointer;
+transition: transform 0.2s;
 }
 
+
+/* Hover effect for navigation arrows */
 .nav-button:hover {
-  transform: scale(1.15);
-  filter: brightness(1.1);
+transform: scale(1.15);
+filter: brightness(1.1);
 }
