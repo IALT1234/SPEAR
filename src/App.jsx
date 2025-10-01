@@ -28,9 +28,9 @@ function App() {
       id: 3,
       deck_name: "HISTORY",
       app_deck_array: [
-        { id: 1, front: "What is NATO?", back: "North Atlantic Treaty Organization" },
-        { id: 2, front: "What was the USSR?", back: "Union of Soviet Socialist Republics" },
-        { id: 3, front: "What is BRICS?", back: "Brazil, Russia, India, China, South Africa" }
+        { id: 1, front: "(ACRONYM) What is NATO?", back: "North Atlantic Treaty Organization" },
+        { id: 2, front: "(ACRONYM) What was the USSR?", back: "Union of Soviet Socialist Republics" },
+        { id: 3, front: "(ACRONYM) What is BRICS?", back: "Brazil, Russia, India, China, South Africa" }
       ]
     }
   ];

@@ -6,8 +6,7 @@
 .deck-bar {
   display: flex;
   background-color: #e0aa6d;
-  border: 5px solid #4a4033;
-  border-radius: 25px;
+  border: 5px solid #e0aa6d;
   margin: 30px auto;
   width: 90%;
   max-width: 1200px;
@@ -44,6 +43,7 @@
   flex-wrap: nowrap;
   white-space: nowrap;
   height: 100%;
+  gap : 10px;
 }
 
 
@@ -53,12 +53,13 @@
    Description: Holds deck button + active underline
 =========================== */
 .deck-button-wrapper {
+  width: 120px;
   display: flex;
   flex-direction: column;
   align-items: center;
   flex-shrink: 0;
-  border: 0px;
-  width: 150px;
+  border: 20px;
+  
 }
 
 
@@ -70,7 +71,7 @@
   font-family: 'Caveat', cursive;
   font-weight: bold;
   font-size: 1.2rem;
-  background-color: #e0aa6d;
+  background-color: #ebaa61;
   color: white;
   border: 2px solid #4a4033;
   border-radius: 0;
@@ -87,7 +88,7 @@
 
 }
 .deck-button:hover {
-  background-color: #d49b50;
+  background-color: #f3ae55;
 }
 
 
@@ -210,7 +211,7 @@
 }
 
 .option-button:hover {
-  background-color: #d49b50;
+  background-color: #f3ae55;
 }
 
 /* Optional override for arrow (↩) button */

@@ -78,9 +78,6 @@ function Decks_Page(props) {
           ) : (
             <>
 
-
-
-
               <button className="option-button option-create-deck" onClick={add_deck_clicked}>
                 CREATE<br />DECK
               </button>
