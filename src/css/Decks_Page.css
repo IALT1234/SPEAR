@@ -306,6 +306,11 @@
 
 
 
+/* selected/active deck button */
+.deck-button.active {
+  background-color: #f3ae55; 
+}
+
 
 
 
