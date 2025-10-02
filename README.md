@@ -59,8 +59,9 @@ Assets live in `src/assets/`.
 ## Roadmap
 
 Short term:
-- Add UI to create and edit decks
-- Persist decks to a backend (Firebase or local storage)
+- Add UI to confirm delete or edit cards and decks
+- Add shuffle function 
+- Persist decks to a backend (Firebase)
 
 Medium term:
 - Import decks from an API
