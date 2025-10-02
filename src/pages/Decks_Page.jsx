@@ -11,6 +11,9 @@ function Decks_Page(props) {
   const [clicked_add_deck, setclicked_add_deck] = useState(false);
   const [clicked_add_card, setclicked_add_card] = useState(false);
   const [clicked_options, setclicked_options] = useState(false);
+  const [clicked_delete_deck, setclicked_delete_deck] = useState(false);
+  const [clicked_delete_card, setclicked_delete_card] = useState(false);
+
 
   function add_deck_clicked() {
     setclicked_add_deck(!clicked_add_deck);
@@ -32,8 +35,18 @@ function Decks_Page(props) {
 
   }
 
-
-
+  function delete_deck_clicked() {
+    setclicked_delete_deck(!clicked_delete_deck);
+    setclicked_add_deck(false);
+    setclicked_add_card(false);
+    setclicked_delete_card(false);
+  }
+  function delete_card_clicked() {
+    setclicked_delete_card(!clicked_delete_card);
+    setclicked_add_deck(false);
+    setclicked_add_card(false);
+    setclicked_delete_deck(false);
+  }
 
   function handleDeleteCard() {
     if (!props.selectedDeck) return;
@@ -56,7 +69,10 @@ function Decks_Page(props) {
               <div className="deck-button-wrapper" key={deck.id}>
                 <button
                   className={`deck-button ${props.selectedDeck === deck.deck_name ? "active" : ""}`}
-                  onClick={() => props.Dselected_deck(deck.deck_name)}
+                  onClick={() => {props.Dselected_deck(deck.deck_name)
+                                  setclicked_delete_deck(false);
+                                  setclicked_delete_card(false);}
+                  }
                 >
                   {deck.deck_name}
                 </button>
@@ -96,13 +112,47 @@ function Decks_Page(props) {
                 ADD<br />CARD
               </button>
 
-              <button className="option-button option-delete-deck" onClick={() => props.deleteDeck(props.selectedDeck)}>
-                DELETE<br />DECK
-              </button>
+              {!clicked_delete_deck ? (
+                <button className="option-button option-delete-deck" onClick={() => delete_deck_clicked()}>
+                  DELETE<br />DECK
+                </button>) :
 
-              <button className="option-button option-delete-card" onClick={handleDeleteCard}>
+                (
+
+                  <div className="confirm-delete-deck">
+                    <span>Are you sure?</span>
+                    <button className="confirm-button" onClick={
+                      () => {props.deleteDeck(props.selectedDeck)
+                            delete_deck_clicked();}
+                      
+                      }>Yes</button>
+                    <button className="cancel-button" onClick={delete_deck_clicked}>No</button>
+                  </div>
+                )
+
+
+              }
+
+              {!clicked_delete_card ? (              
+              <button className="option-button option-delete-card" onClick={delete_card_clicked}>
                 DELETE<br />CARD
               </button>
+              ) : (
+
+                <div className="confirm-delete-card">
+
+                  <span>Are you sure?</span>
+                  <button className="confirm-button" onClick={
+                    () => {handleDeleteCard();
+                          delete_card_clicked();}
+                    }>Yes</button>
+                  <button className="cancel-button" onClick={delete_card_clicked}>No</button>
+                </div>
+              )
+
+              }
+
+
 
               <button className="option-button arrow-button option-close" onClick={options_clicked}>
                 <span className="arrow">&#8634;</span>
