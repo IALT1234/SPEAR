@@ -1,8 +1,33 @@
 import FlashCard from "../components/FlashCard"
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import "../css/Current_Deck.css";
+import NewDeckForm from "./NewDeckForm";
+import NewCardForm from "./NewCardForm";
 
-function Current_Deck({ deck, currentIndex, setCurrentIndex }) {
+function Current_Deck({ deck, currentIndex, setCurrentIndex, selectedDeck, Dselected_deck, addDeck, addCard, pendingCardDeck, setPendingCardDeck }) {
+  // if creating a new deck, render the NewDeckForm
+  if (selectedDeck === 'NEW_DECK') {
+    return (
+      <div className="deck-container">
+        <NewDeckForm addDeck={(newDeck) => { addDeck(newDeck); Dselected_deck(newDeck.deck_name); }} />
+      </div>
+    );
+  }
+
+  // if adding a new card, render the NewCardForm
+  if (selectedDeck === 'NEW_CARD') {
+    return (
+      <div className="card-container">
+        <NewCardForm addCard={(deckName, card) => {
+          addCard(deckName, card);
+          // after adding the card, select the deck and clear pending
+          Dselected_deck(deckName);
+          setPendingCardDeck('');
+        }} deckName={pendingCardDeck} newDeck={true} />
+      </div>
+    );
+  }
+
   if (!deck) return <p>Please select a deck</p>;
 
   const cards = deck.app_deck_array ?? [];
@@ -39,7 +64,6 @@ function Current_Deck({ deck, currentIndex, setCurrentIndex }) {
     </div>
   );
 }
-
 
 export default Current_Deck;
 

@@ -38,6 +38,7 @@ function App() {
 
   const [selected_deck, setSelectedDeck] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [pendingCardDeck, setPendingCardDeck] = useState('');
 
   const [all_decks, set_all_decks] = useState(() => {
     const saved = localStorage.getItem("all_decks");
@@ -95,8 +96,11 @@ function App() {
         deleteCard={deleteCard}
         deleteDeck={deleteDeck}
         currentIndex={currentIndex}
+        setPendingCardDeck={setPendingCardDeck}
       />
-      <Current_Deck deck={selectedDeckObject} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} />
+      <Current_Deck deck={selectedDeckObject} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex}
+        selectedDeck={selected_deck} Dselected_deck={setSelectedDeck} addDeck={addDeck} addCard={addCard}
+        pendingCardDeck={pendingCardDeck} setPendingCardDeck={setPendingCardDeck} />
     </>
   );
 }

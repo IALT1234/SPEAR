@@ -1,6 +1,7 @@
 import { useState } from "react";
+import FlashCard from "../components/FlashCard";
 
-function NewCardForm({ addCard, deckName }) {
+function NewCardForm({ addCard, deckName, newDeck }) {
   const [front, setFront] = useState("");
   const [back, setBack] = useState("");
 
@@ -19,6 +20,9 @@ function NewCardForm({ addCard, deckName }) {
   }
 
   return (
+    <FlashCard card_front=
+
+    {
     <form onSubmit={handleSubmit} className="new-card-form">
       <input
         type="text"
@@ -34,6 +38,12 @@ function NewCardForm({ addCard, deckName }) {
       />
       <button type="submit">Add Card</button>
     </form>
+    }
+
+    card_back=" "
+
+    newDeck={true}
+    ></FlashCard>
   );
 }
 

@@ -6,7 +6,6 @@ import React, { useState, useEffect } from 'react';
 import NewDeckForm from "./NewDeckForm";
 import NewCardForm from "./NewCardForm";
 
-
 function Decks_Page(props) {
 
   const [clicked_add_deck, setclicked_add_deck] = useState(false);
@@ -56,12 +55,12 @@ function Decks_Page(props) {
             {props.deck_array.map(deck => (
               <div className="deck-button-wrapper" key={deck.id}>
                 <button
-                  className={`deck-button ${props.Dselected_deck === deck.deck_name ? "active" : ""}`}
+                  className={`deck-button ${props.selectedDeck === deck.deck_name ? "active" : ""}`}
                   onClick={() => props.Dselected_deck(deck.deck_name)}
                 >
                   {deck.deck_name}
                 </button>
-                {props.Dselected_deck === deck.deck_name && <div className="active-underline" />}
+                {props.selectedDeck === deck.deck_name && <div className="active-underline" />}
               </div>
             ))}
           </div>
@@ -78,11 +77,22 @@ function Decks_Page(props) {
           ) : (
             <>
 
-              <button className="option-button option-create-deck" onClick={add_deck_clicked}>
+              <button className="option-button option-create-deck" onClick={() => {
+                add_deck_clicked();
+                // name so the Current_Deck component can render the NewDeckForm inside a FlashCard
+                props.Dselected_deck('NEW_DECK');
+              }}
+              >
                 CREATE<br />DECK
               </button>
 
-              <button className="option-button option-add-card" onClick={add_card_clicked}>
+              <button className="option-button option-add-card" onClick={() => {
+                add_card_clicked();
+                // set the sentinel so Current_Deck will render NewCardForm
+                props.Dselected_deck('NEW_CARD');
+                // pass new deck to App.jsx
+                props.setPendingCardDeck(props.selectedDeck);
+              }}>
                 ADD<br />CARD
               </button>
 
@@ -103,19 +113,6 @@ function Decks_Page(props) {
 
       </div>
 
-
-
-      {clicked_add_deck && (
-        <div className="form-wrapper">
-          <NewDeckForm addDeck={props.addDeck} />
-        </div>
-      )}
-
-      {clicked_add_card && (
-        <div className="form-wrapper">
-          <NewCardForm addCard={props.addCard} deckName={props.selectedDeck} />
-        </div>
-      )}
     </div>
   );
 
