@@ -8,12 +8,15 @@
   background-color: #e0aa6d;
   border: 5px solid #e0aa6d;
   margin: 30px auto;
-  width: 90%;
+
+  /* locked width */
+  width: 1200px;          
   max-width: 1200px;
+
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
   overflow: hidden;
   height: 140px;
-  padding: 0;
+  padding: 5px;
 }
 
 
@@ -40,7 +43,7 @@
 =========================== */
 .deck-buttons-container {
   display: inline-flex;
-  flex-wrap: nowrap;
+  /* flex-wrap: nowrap; */
   white-space: nowrap;
   height: 100%;
   gap : 10px;
@@ -54,7 +57,7 @@
 =========================== */
 .deck-button-wrapper {
   width: 120px;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   align-items: center;
   flex-shrink: 0;
@@ -73,7 +76,7 @@
   font-size: 1.2rem;
   background-color: #ebaa61;
   color: white;
-  border: 2px solid #4a4033;
+  border: 2px solid #ebaa61;
   border-radius: 0;
   margin: 0;
   padding: 0;
@@ -89,6 +92,8 @@
 }
 .deck-button:hover {
   background-color: #f3ae55;
+  transform: scale(1.15);
+
 }
 
 
@@ -110,21 +115,21 @@
    Affects: <div className="options-area">
 =========================== */
 .options-area {
-  /* Fixed width in pixels - change 320px to your desired fixed width */
-  width: 320px;
-
+  flex: 0 0 auto;          
+  transition: width 0.3s;  
   height: 100%;
   background-color: #e0aa6d;
   border-left: 4px solid #4a4033;
-  border-top: 0px solid #e0aa6d;
   /* Prevent shrinking when inside a flex container */
-  flex: 0 0 320px;
-  box-sizing: border-box;
+  /* flex: 0 0 320px;
+  box-sizing: border-box; */
 
 }
 
 /* Default (collapsed) state - shows 3-dot button */
 .options-area:not(.expanded) {
+  /* display: flex; */
+  width: 100px;            
   display: flex;
   justify-content: center;
   align-items: center;
@@ -134,6 +139,7 @@
 
 /* Expanded state with grid layout for buttons */
 .options-area.expanded {
+  width: 320px;            
   display: grid;
   grid-template-columns: 1fr 1fr 80px;
   grid-template-rows: 1fr 1fr;
@@ -257,7 +263,7 @@
   justify-content: center;
   align-items: center;
   background-color: #e0aa6d;
-  border: 2px solid #4a4033;
+  /* border: 2px solid #4a4033; */
   width: 100%;
   height: 100%;
   cursor: pointer;
