@@ -1,8 +1,7 @@
 import FlashCard from "../components/FlashCard"
 import Deck from "../components/Deck"
 import "../css/Decks_Page.css";
-import React, { useState, useEffect,  } from 'react';
-
+import React, { useState, useEffect, useRef } from 'react'
 import NewDeckForm from "./NewDeckForm";
 import NewCardForm from "./NewCardForm";
 
@@ -14,6 +13,24 @@ function Decks_Page(props) {
   const [clicked_delete_deck, setclicked_delete_deck] = useState(false);
   const [clicked_delete_card, setclicked_delete_card] = useState(false);
 
+  const scrollRef = useRef(null)
+
+  useEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
+
+    const handleWheel = (e) => {
+      if (e.deltaY === 0) return // only respond to vertical scroll
+      e.preventDefault()
+      el.scrollLeft += e.deltaY
+    }
+
+    el.addEventListener('wheel', handleWheel, { passive: false })
+
+    return () => {
+      el.removeEventListener('wheel', handleWheel)
+    }
+  }, [])
 
   function add_deck_clicked() {
     setclicked_add_deck(!clicked_add_deck);
@@ -63,7 +80,7 @@ function Decks_Page(props) {
   return (
     <div>
       <div className="deck-bar">
-        <div className="deck-buttons-wrapper">
+        <div className="deck-buttons-wrapper" ref={scrollRef}>
           <div className="deck-buttons-container">
             {props.deck_array.map(deck => (
               <div className="deck-button-wrapper" key={deck.id}>
