@@ -2,7 +2,6 @@ import FlashCard from "../components/FlashCard"
 import Deck from "../components/Deck"
 import "../css/Decks_Page.css";
 import React, { useState, useEffect,  } from 'react';
-import React, { useState, useEffect, useRef } from 'react';
 
 import NewDeckForm from "./NewDeckForm";
 import NewCardForm from "./NewCardForm";
