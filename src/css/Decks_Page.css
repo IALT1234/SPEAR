@@ -19,6 +19,34 @@
   padding: 5px;
 }
 
+/* ===========================
+   OPTIONS PANEL BUTTONS
+   Affects: Buttons like CREATE DECK, ADD CARD, etc.
+   JSX: <button className="option-button option-create-deck">...
+=========================== */
+.option-button {
+  font-family: 'Caveat', cursive;
+  font-weight: bold;
+  font-size: 1.2rem;
+  background-color: #e0aa6d;
+  color: white;
+  border: 2px solid #4a4033;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  white-space: pre-line;
+  box-sizing: border-box;
+}
+.option-button:hover {
+  background-color: #f3ae55;
+}
+
 
 /* ===========================
    DECK BUTTONS SCROLL WRAPPER
@@ -30,9 +58,13 @@
   flex: 1 1 auto;
   display: flex;
   align-items: center;
+
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
 }
 .deck-buttons-wrapper::-webkit-scrollbar {
   display: none;
+
 }
 
 
@@ -101,13 +133,13 @@
    ACTIVE DECK INDICATOR
    Affects: <div className="active-underline">
 =========================== */
-.active-underline {
+/* .active-underline {
   margin-top: 5px;
   height: 5px;
   width: 50%;
   background-color: #d4cc00;
   border-radius: 3px;
-}
+} */
 
 
 /* ===========================
@@ -133,8 +165,52 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
+
+
+/* ===========================
+   OPTIONS DELETE DECK 
+   Affects: <div className="confirm-delete-deck">
+=========================== */
+.confirm-delete-deck{
+  display: grid;
+  grid-template-rows: 50% 50%;  
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "confirm_delete_deck_button"
+    "cancel_delete_deck_button";
+}
+.confirm-delete-deck-button{grid-area : confirm_delete_deck_button;
+
+  font-size: .8rem;
+  background-color: #dd5050;
+}
+.confirm-delete-deck-button:hover{
+  background-color: #bb1f1f;
+}
+.cancel-delete-deck-button{grid-area : cancel_delete_deck_button;}
+
+/* ===========================
+   OPTIONS DELETE CARD 
+   Affects: <div className="confirm-delete-CARD">
+=========================== */
+.confirm-delete-card{
+  display: grid;
+  grid-template-rows: 50% 50%;  
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "confirm_delete_card_button"
+    "cancel_delete_card_button";
+} 
+
+.confirm-delete-card-button{grid-area : confirm_delete_card_button;
+  font-size: .8rem;
+  background-color: #dd5050;
+}
+.confirm-delete-card-button:hover{
+  background-color: #bb1f1f;
+}
+.cancel-delete-card-button{grid-area : cancel_delete_card_button;}
 
 
 /* Expanded state with grid layout for buttons */
@@ -147,32 +223,16 @@
     "createDeck addCard arrow"
     "deleteDeck deleteCard arrow";
 }
-
-
 /* ===========================
-   OPTIONS PANEL BUTTONS
-   Affects: Buttons like CREATE DECK, ADD CARD, etc.
-   JSX: <button className="option-button option-create-deck">...
+   GRID AREA MAPPING (OPTION BUTTONS)
+   Description: Assigns each button to a grid cell
 =========================== */
-.option-button {
-  font-family: 'Caveat', cursive;
-  font-weight: bold;
-  font-size: 1.2rem;
-  background-color: #e0aa6d;
-  color: white;
-  border: 2px solid #4a4033;
-  border-radius: 0;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  white-space: pre-line;
-  box-sizing: border-box;
-}
+.option-create-deck { grid-area: createDeck; }
+.option-add-card    { grid-area: addCard; }
+.option-delete-deck { grid-area: deleteDeck; }
+.option-delete-card { grid-area: deleteCard; }
+.option-close       { grid-area: arrow; }
+
 
 
 .back_from_dock_options{
@@ -216,9 +276,6 @@
   box-sizing: border-box;
 }
 
-.option-button:hover {
-  background-color: #f3ae55;
-}
 
 /* Optional override for arrow (↩) button */
 .arrow-button {
@@ -233,15 +290,6 @@
 }
 
 
-/* ===========================
-   GRID AREA MAPPING (OPTION BUTTONS)
-   Description: Assigns each button to a grid cell
-=========================== */
-.option-create-deck { grid-area: createDeck; }
-.option-add-card    { grid-area: addCard; }
-.option-delete-deck { grid-area: deleteDeck; }
-.option-delete-card { grid-area: deleteCard; }
-.option-close       { grid-area: arrow; }
 
 
 
@@ -310,7 +358,6 @@
 .deck-button.active {
   background-color: #f3ae55; 
 }
-
 
 
 

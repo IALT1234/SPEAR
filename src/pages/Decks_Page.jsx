@@ -1,7 +1,8 @@
 import FlashCard from "../components/FlashCard"
 import Deck from "../components/Deck"
 import "../css/Decks_Page.css";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,  } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import NewDeckForm from "./NewDeckForm";
 import NewCardForm from "./NewCardForm";
@@ -97,6 +98,10 @@ function Decks_Page(props) {
                 add_deck_clicked();
                 // name so the Current_Deck component can render the NewDeckForm inside a FlashCard
                 props.Dselected_deck('NEW_DECK');
+                setclicked_delete_deck(false);
+                setclicked_delete_card(false);
+
+
               }}
               >
                 CREATE<br />DECK
@@ -108,25 +113,31 @@ function Decks_Page(props) {
                 props.Dselected_deck('NEW_CARD');
                 // pass new deck to App.jsx
                 props.setPendingCardDeck(props.selectedDeck);
+
+                setclicked_delete_deck(false);
+                setclicked_delete_card(false);
               }}>
                 ADD<br />CARD
               </button>
 
               {!clicked_delete_deck ? (
-                <button className="option-button option-delete-deck" onClick={() => delete_deck_clicked()}>
+                <button className="option-button option-delete-deck" onClick={() => delete_deck_clicked()
+
+
+                  
+                }>
                   DELETE<br />DECK
                 </button>) :
 
                 (
 
                   <div className="confirm-delete-deck">
-                    <span>Are you sure?</span>
-                    <button className="confirm-button" onClick={
+                    <button className="option-button confirm-delete-deck-button" onClick={
                       () => {props.deleteDeck(props.selectedDeck)
                             delete_deck_clicked();}
                       
-                      }>Yes</button>
-                    <button className="cancel-button" onClick={delete_deck_clicked}>No</button>
+                      }>CONFIRM DELETE</button>
+                    <button className="option-button cancel-delete-deck-button" onClick={delete_deck_clicked}>CANCEL</button>
                   </div>
                 )
 
@@ -141,12 +152,11 @@ function Decks_Page(props) {
 
                 <div className="confirm-delete-card">
 
-                  <span>Are you sure?</span>
-                  <button className="confirm-button" onClick={
+                  <button className="option-button confirm-delete-card-button" onClick={
                     () => {handleDeleteCard();
                           delete_card_clicked();}
-                    }>Yes</button>
-                  <button className="cancel-button" onClick={delete_card_clicked}>No</button>
+                    }>CONFIRM DELETE</button>
+                  <button className="option-button cancel-delete-card-button" onClick={delete_card_clicked}>CANCEL</button>
                 </div>
               )
 
@@ -154,7 +164,12 @@ function Decks_Page(props) {
 
 
 
-              <button className="option-button arrow-button option-close" onClick={options_clicked}>
+              <button className="option-button arrow-button option-close" onClick = { () =>  {
+              
+                                                                            options_clicked()
+                                                                            setclicked_delete_deck(false);
+                                                                            setclicked_delete_card(false);}}
+              >
                 <span className="arrow">&#8634;</span>
               </button>
             </>

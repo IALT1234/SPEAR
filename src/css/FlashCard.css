@@ -1,10 +1,10 @@
 .flash-card {
+  
   width: 600px;
   height: 350px;
   background-color: #ebaa61;;
   border: 16px solid #e0aa6d;  font-size: 32px;
   font-weight: bold;
-  color: #eee;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,3 +21,5 @@
 .flash-card:hover {
   transform: scale(1.02);
 }
+
+
