@@ -1,6 +1,6 @@
 # SPEAR
 
-A simple React-based flashcards app where you can select a deck and flip through cards. Meant for users to intall and instantly start creating decks with a styled and intuitive UI. 
+A simple React-based flashcards app where you can select a deck and flip through cards. Meant for users to install and instantly start creating decks with a styled and intuitive UI. 
 
 ![SPEAR Image](src/images/main.png)
 
