@@ -2,7 +2,7 @@
 
 A simple React-based flashcards app where you can select a deck and flip through cards.  
 
-![SPEAR Image](src\images\main.png)
+![SPEAR Image](src/images/main.png)
 
 
 ### Features
