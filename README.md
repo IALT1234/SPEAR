@@ -62,9 +62,9 @@ Assets live in `src/assets/`.
 ## Roadmap
 
 Short term:
-- Add shuffle function 
-- Add functionality to drag decks
-- Persist decks to a backend (Firebase)
+
+- Persist decks to a Firebase database (local storage already handled)
+- Polish UI functionality and design
 
 Medium term:
 - Import decks from an API
