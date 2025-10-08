@@ -1,12 +1,10 @@
 .flash-card {
+  
   width: 600px;
   height: 350px;
-  background-color: #e0aa6d;
-  border: 4px solid #4a4033;
-  border-radius: 40px;
-  font-size: 32px;
+  background-color: #ebaa61;;
+  border: 16px solid #e0aa6d;  font-size: 32px;
   font-weight: bold;
-  color: #eee;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,8 +12,14 @@
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
   cursor: pointer;
   transition: transform 0.3s;
+
+  font-family: 'Caveat', cursive;
+  font-weight: bold;
+
 }
 
 .flash-card:hover {
   transform: scale(1.02);
 }
+
+

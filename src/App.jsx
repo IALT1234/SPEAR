@@ -8,7 +8,7 @@ function App() {
   const defaultDecks = [
     {
       id: 1,
-      deck_name: "React",
+      deck_name: "REACT",
       app_deck_array: [
         { id: 1, front: "What is React?", back: "A JavaScript library for building UIs." },
         { id: 2, front: "What is a component?", back: "A reusable piece of UI in React." },
@@ -17,7 +17,7 @@ function App() {
     },
     {
       id: 2,
-      deck_name: "Math",
+      deck_name: "MATH",
       app_deck_array: [
         { id: 1, front: "2 + 2", back: "4" },
         { id: 2, front: "4 x 4", back: "16" },
@@ -26,11 +26,11 @@ function App() {
     },
     {
       id: 3,
-      deck_name: "History",
+      deck_name: "HISTORY",
       app_deck_array: [
-        { id: 1, front: "What is NATO?", back: "North Atlantic Treaty Organization" },
-        { id: 2, front: "What was the USSR?", back: "Union of Soviet Socialist Republics" },
-        { id: 3, front: "What is BRICS?", back: "Brazil, Russia, India, China, South Africa" }
+        { id: 1, front: "(ACRONYM) What is NATO?", back: "North Atlantic Treaty Organization" },
+        { id: 2, front: "(ACRONYM) What was the USSR?", back: "Union of Soviet Socialist Republics" },
+        { id: 3, front: "(ACRONYM) What is BRICS?", back: "Brazil, Russia, India, China, South Africa" }
       ]
     }
   ];
@@ -38,6 +38,7 @@ function App() {
 
   const [selected_deck, setSelectedDeck] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [pendingCardDeck, setPendingCardDeck] = useState('');
 
   const [all_decks, set_all_decks] = useState(() => {
     const saved = localStorage.getItem("all_decks");
@@ -74,7 +75,13 @@ function App() {
       )
     );
   }
+  function deleteDeck(deckName) {
+    set_all_decks(prev => prev.filter(deck => deck.deck_name !== deckName));
 
+    if (selected_deck === deckName) {
+      setSelectedDeck(""); // clear selection if deleted
+    }
+  }
 
   const selectedDeckObject = all_decks.find(deck => deck.deck_name === selected_deck);
 
@@ -87,9 +94,13 @@ function App() {
         addDeck={addDeck}
         addCard={addCard}
         deleteCard={deleteCard}
+        deleteDeck={deleteDeck}
         currentIndex={currentIndex}
+        setPendingCardDeck={setPendingCardDeck}
       />
-      <Current_Deck deck={selectedDeckObject} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} />
+      <Current_Deck deck={selectedDeckObject} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex}
+        selectedDeck={selected_deck} Dselected_deck={setSelectedDeck} addDeck={addDeck} addCard={addCard}
+        pendingCardDeck={pendingCardDeck} setPendingCardDeck={setPendingCardDeck} />
     </>
   );
 }
