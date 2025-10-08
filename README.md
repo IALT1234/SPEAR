@@ -2,6 +2,9 @@
 
 A simple React-based flashcards app where you can select a deck and flip through cards.  
 
+![SPEAR Image](src\images\main.png)
+
+
 ### Features
 - Flip cards to see the answer (click on the flashcard).  
 - Multiple decks available.  
@@ -59,8 +62,8 @@ Assets live in `src/assets/`.
 ## Roadmap
 
 Short term:
-- Add UI to confirm delete or edit cards and decks
 - Add shuffle function 
+- Add functionality to drag decks
 - Persist decks to a backend (Firebase)
 
 Medium term:

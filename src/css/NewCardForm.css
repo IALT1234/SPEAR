@@ -16,34 +16,6 @@
     "back"
     "add";
 }
-.new-card-form_input_FRONT{grid-area: front;
-  color: #ffffff;
-  border : #e0aa6d;
-  outline: none;
-
-}
-.new-card-form_input_BACK{grid-area: back;
-
-  color: #ffffff;
-  border : #e0aa6d;
-  outline: none;
-
-
-}
-.new-card-form_input_ADD {
-  color: #ffffff;
-  outline: none;
-
-  grid-area: add;
-  background-color: #f3ae55;
-}
-.new-card-form_input_ADD:hover {
-
-  background-color: #f3ae55;
-  cursor: pointer;
-}
-
-
 
 .new-card-form-section{
   font-family: 'Caveat', cursive;
@@ -70,3 +42,32 @@
   cursor: text;
 }
   
+.new-card-form_input_FRONT{grid-area: front;
+  color: #ffffff;
+  border : #e0aa6d;
+  outline: none;
+
+}
+.new-card-form_input_BACK{grid-area: back;
+
+  color: #ffffff;
+  border : #e0aa6d;
+  outline: none;
+
+
+}
+.new-card-form_input_ADD {
+  color: #ffffff;
+  outline: none;
+
+  grid-area: add;
+  background-color: #ebaa61;
+}
+.new-card-form_input_ADD:hover {
+
+  background-color: #f3ae55;
+  cursor: pointer;
+}
+
+
+
