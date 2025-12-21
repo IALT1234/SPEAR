@@ -62,17 +62,18 @@ Assets live in `src/assets/`.
 ## Roadmap
 
 Short term:
-
 - Persist decks to a Firebase database (local storage already handled)
-- Polish UI functionality and design
+- Import decks from an API
+- Hanlde Databases
 
 Medium term:
-- Import decks from an API
 - Add animated transitions and improved mobile UI
+- Study statistics (progress, time spent)
 
 Long term:
-- Study statistics (progress, time spent)
 - Quiz/trivia modes and deeper customization
+- Polish UI functionality and design
+
 
 ## Notes
 
