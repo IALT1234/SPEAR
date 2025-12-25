@@ -10,11 +10,7 @@ function NewCardForm({ addCard, deckName, newDeck }) {
     e.preventDefault();
     if (!front.trim()) return;
 
-    addCard(deckName, {
-      id: Date.now(),
-      front,
-      back,
-    });
+    addCard(deckName, { front, back });
 
     setFront("");
     setBack("");

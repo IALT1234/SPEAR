@@ -5,6 +5,11 @@ from database import Base, engine
 from routers import decks, cards
 from routers.auth_routes import router as auth_router
 
+
+
+
+
+
 # create tables
 Base.metadata.create_all(bind=engine)
 
@@ -17,6 +22,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+
 
 @app.get("/health")
 def health():

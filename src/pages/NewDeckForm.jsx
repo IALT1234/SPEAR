@@ -11,9 +11,7 @@ function NewDeckForm({ addDeck }) {
     if (!name.trim()) return;
 
     addDeck({
-      id: Date.now(), 
       deck_name: name,
-      app_deck_array: [] 
     });
 
     setName(""); 
