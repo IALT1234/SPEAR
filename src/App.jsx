@@ -29,6 +29,7 @@ function App() {
 
   const [authMode, setAuthMode] = useState("login"); // "login" or "register"
 
+  const [mode, setMode] = useState("view");
 
   // load decks after login
   async function refreshDecks() {
@@ -94,6 +95,26 @@ function App() {
     setCurrentIndex(0);
   }
 
+
+  async function deleteCurrentCard() {
+    if (typeof selectedDeckId !== "number") return;
+    const current = cards[currentIndex];
+    if (!current) return;
+
+    await apiDeleteCard(current.id);
+
+    const updated = await getCards(selectedDeckId);
+    setCards(updated);
+
+    // keep index in range
+    setCurrentIndex((prev) => {
+      const nextMax = Math.max(updated.length - 1, 0);
+      return Math.min(prev, nextMax);
+    });
+  }
+
+
+
   async function deleteDeck(deckId) {
     await apiDeleteDeck(deckId);
     await refreshDecks();
@@ -138,10 +159,7 @@ function App() {
       deck_array={deck_array_for_ui}
       Dselected_deck={(deckNameOrSentinel) => {
         // support your sentinel logic:
-        if (deckNameOrSentinel === "NEW_DECK" || deckNameOrSentinel === "NEW_CARD") {
-          setSelectedDeckId(deckNameOrSentinel);
-          return;
-        }
+
 
         // otherwise map deck name -> deck id
         const deck = decks.find((d) => d.title === deckNameOrSentinel);
@@ -161,6 +179,10 @@ function App() {
         const deck = decks.find((d) => d.title === deckName);
         if (deck) return deleteCard(deck.id, cardId);
       }}
+
+      deleteCurrentCard={deleteCurrentCard}
+      cardsCount={cards.length}
+
       deleteDeck={(deckName) => {
         const deck = decks.find((d) => d.title === deckName);
         if (deck) return deleteDeck(deck.id);
@@ -170,6 +192,9 @@ function App() {
         const deck = decks.find((d) => d.title === deckName);
         setPendingCardDeckId(deck ? deck.id : null);
       }}
+
+      setMode={setMode}
+
     />
 
     <Current_Deck
@@ -181,14 +206,13 @@ function App() {
           ? selectedDeckId
           : (selectedDeckObject ? selectedDeckObject.title : "")
       }
-      Dselected_deck={(nameOrSentinel) => {
-        if (nameOrSentinel === "NEW_DECK" || nameOrSentinel === "NEW_CARD") {
-          setSelectedDeckId(nameOrSentinel);
-          return;
-        }
-        const deck = decks.find((d) => d.title === nameOrSentinel);
+
+      Dselected_deck={(name) => {
+        const deck = decks.find((d) => d.title === name);
         if (deck) setSelectedDeckId(deck.id);
       }}
+
+      
       addDeck={addDeck}
       addCard={(deckName, card) => {
         const deck = decks.find((d) => d.title === deckName);
@@ -196,6 +220,10 @@ function App() {
       }}
       pendingCardDeck={pendingCardDeckId ? (decks.find(d => d.id === pendingCardDeckId)?.title ?? "") : ""}
       setPendingCardDeck={() => {}}
+
+      mode={mode}
+      setMode={setMode}
+
     />
   </>
 );

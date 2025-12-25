@@ -38,11 +38,7 @@ function Decks_Page(props) {
 
   }
 
-  function add_card_clicked() {
-    setclicked_add_card(!clicked_add_card);
-    setclicked_add_deck(false);
 
-  }
 
 
   function options_clicked() {
@@ -58,6 +54,7 @@ function Decks_Page(props) {
     setclicked_add_card(false);
     setclicked_delete_card(false);
   }
+  
   function delete_card_clicked() {
     setclicked_delete_card(!clicked_delete_card);
     setclicked_add_deck(false);
@@ -67,14 +64,8 @@ function Decks_Page(props) {
 
   function handleDeleteCard() {
     if (!props.selectedDeck) return;
-
-    const deck = props.deck_array.find(d => d.deck_name === props.selectedDeck);
-    if (deck && deck.app_deck_array.length > 0) {
-      const currentCard = deck.app_deck_array[props.currentIndex];
-      if (currentCard) {
-        props.deleteCard(props.selectedDeck, currentCard.id);
-      }
-    }
+    if (!props.cardsCount || props.cardsCount < 1) return;
+    props.deleteCurrentCard();
   }
 
   return (
@@ -86,10 +77,12 @@ function Decks_Page(props) {
               <div className="deck-button-wrapper" key={deck.id}>
                 <button
                   className={`deck-button ${props.selectedDeck === deck.deck_name ? "active" : ""}`}
-                  onClick={() => {props.Dselected_deck(deck.deck_name)
-                                  setclicked_delete_deck(false);
-                                  setclicked_delete_card(false);}
-                  }
+                  onClick={() => {
+                    props.setMode("view");
+                    props.Dselected_deck(deck.deck_name);
+                    setclicked_delete_deck(false);
+                    setclicked_delete_card(false);
+                  }}
                 >
                   {deck.deck_name}
                 </button>
@@ -113,7 +106,7 @@ function Decks_Page(props) {
               <button className="option-button option-create-deck" onClick={() => {
                 add_deck_clicked();
                 // name so the Current_Deck component can render the NewDeckForm inside a FlashCard
-                props.Dselected_deck('NEW_DECK');
+                props.setMode("create-deck");
                 setclicked_delete_deck(false);
                 setclicked_delete_card(false);
 
@@ -124,10 +117,7 @@ function Decks_Page(props) {
               </button>
 
               <button className="option-button option-add-card" onClick={() => {
-                add_card_clicked();
-                // set the sentinel so Current_Deck will render NewCardForm
-                props.Dselected_deck('NEW_CARD');
-                // pass new deck to App.jsx
+                props.setMode("create-card");
                 props.setPendingCardDeck(props.selectedDeck);
 
                 setclicked_delete_deck(false);
@@ -182,9 +172,9 @@ function Decks_Page(props) {
 
               <button className="option-button arrow-button option-close" onClick = { () =>  {
               
-                                                                            options_clicked()
-                                                                            setclicked_delete_deck(false);
-                                                                            setclicked_delete_card(false);}}
+                    options_clicked()
+                    setclicked_delete_deck(false);
+                    setclicked_delete_card(false);}}
               >
                 <span className="arrow">&#8634;</span>
               </button>

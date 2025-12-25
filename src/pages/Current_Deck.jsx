@@ -4,26 +4,36 @@ import "../css/Current_Deck.css";
 import NewDeckForm from "./NewDeckForm";
 import NewCardForm from "./NewCardForm";
 
-function Current_Deck({ deck, currentIndex, setCurrentIndex, selectedDeck, Dselected_deck, addDeck, addCard, pendingCardDeck, setPendingCardDeck }) {
+function Current_Deck({ deck, currentIndex, setCurrentIndex, selectedDeck, Dselected_deck, addDeck, addCard, pendingCardDeck, setPendingCardDeck, mode, setMode }) {
   // if creating a new deck, render the NewDeckForm
-  if (selectedDeck === 'NEW_DECK') {
+  if (mode === "create-deck") {
     return (
       <div className="deck-container">
-        <NewDeckForm addDeck={(newDeck) => { addDeck(newDeck); Dselected_deck(newDeck.deck_name); }} />
+        <NewDeckForm
+          addDeck={async (newDeck) => {
+            await addDeck(newDeck);
+            Dselected_deck(newDeck.deck_name);
+            setMode("view");          
+          }}
+        />
       </div>
     );
   }
 
   // if adding a new card, render the NewCardForm
-  if (selectedDeck === 'NEW_CARD') {
+  if (mode === "create-card") {
     return (
       <div className="card-container">
-        <NewCardForm addCard={(deckName, card) => {
-          addCard(deckName, card);
-          // after adding the card, select the deck and clear pending
-          Dselected_deck(deckName);
-          setPendingCardDeck('');
-        }} deckName={pendingCardDeck} newDeck={true} />
+        <NewCardForm
+          addCard={async (deckName, card) => {
+            await addCard(deckName, card);
+            Dselected_deck(deckName);
+            setPendingCardDeck('');
+            setMode("view");         
+          }}
+          deckName={pendingCardDeck}
+          newDeck={true}
+        />
       </div>
     );
   }
