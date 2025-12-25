@@ -1,109 +1,204 @@
+import React, { useEffect, useState } from "react";
+import Decks_Page from "./pages/Decks_Page";
+import Current_Deck from "./pages/Current_Deck";
+import LoginPage from "./pages/LoginPage";
 
-import Decks_Page from './pages/Decks_Page'
-import Current_Deck from './pages/Current_Deck'
-import FlashCard from './components/FlashCard'
-import React, { useState, useEffect } from 'react';
+import RegisterPage from "./pages/RegisterPage";
+import Account from "./components/Account";
+
+import {
+  getDecks,
+  createDeck,
+  deleteDeck as apiDeleteDeck,
+  getCards,
+  createCard,
+  deleteCard as apiDeleteCard,
+} from "./api";
 
 function App() {
-  const defaultDecks = [
-    {
-      id: 1,
-      deck_name: "REACT",
-      app_deck_array: [
-        { id: 1, front: "What is React?", back: "A JavaScript library for building UIs." },
-        { id: 2, front: "What is a component?", back: "A reusable piece of UI in React." },
-        { id: 3, front: "What is state in React?", back: "An object that determines how a component renders and behaves." }
-      ]
-    },
-    {
-      id: 2,
-      deck_name: "MATH",
-      app_deck_array: [
-        { id: 1, front: "2 + 2", back: "4" },
-        { id: 2, front: "4 x 4", back: "16" },
-        { id: 3, front: "20 - 15", back: "5" }
-      ]
-    },
-    {
-      id: 3,
-      deck_name: "HISTORY",
-      app_deck_array: [
-        { id: 1, front: "(ACRONYM) What is NATO?", back: "North Atlantic Treaty Organization" },
-        { id: 2, front: "(ACRONYM) What was the USSR?", back: "Union of Soviet Socialist Republics" },
-        { id: 3, front: "(ACRONYM) What is BRICS?", back: "Brazil, Russia, India, China, South Africa" }
-      ]
-    }
-  ];
+  const [authed, setAuthed] = useState(!!localStorage.getItem("token"));
 
+  const [decks, setDecks] = useState([]);
+  const [selectedDeckId, setSelectedDeckId] = useState(null);
 
-  const [selected_deck, setSelectedDeck] = useState('');
+  const [cards, setCards] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [pendingCardDeck, setPendingCardDeck] = useState('');
 
-  const [all_decks, set_all_decks] = useState(() => {
-    const saved = localStorage.getItem("all_decks");
-    return saved ? JSON.parse(saved) : defaultDecks;
-  });
+  const [pendingCardDeckId, setPendingCardDeckId] = useState(null);
 
-  useEffect(() => {
-    localStorage.setItem("all_decks", JSON.stringify(all_decks));
-  }, [all_decks]);
 
-  function addDeck(newDeck) {
-    set_all_decks(prev => [...prev, newDeck]);
-  }
+  const [authMode, setAuthMode] = useState("login"); // "login" or "register"
 
-  function addCard(deckName, card) {
-    set_all_decks(prev =>
-      prev.map(deck =>
-        deck.deck_name === deckName
-          ? { ...deck, app_deck_array: [...deck.app_deck_array, card] }
-          : deck
-      )
-    );
-  }
 
-  function deleteCard(deckName, cardId) {
-    set_all_decks(prev =>
-      prev.map(deck =>
-        deck.deck_name === deckName
-          ? {
-              ...deck,
-              app_deck_array: deck.app_deck_array.filter(c => c.id !== cardId)
-            }
-          : deck
-      )
-    );
-  }
-  function deleteDeck(deckName) {
-    set_all_decks(prev => prev.filter(deck => deck.deck_name !== deckName));
-
-    if (selected_deck === deckName) {
-      setSelectedDeck(""); // clear selection if deleted
+  // load decks after login
+  async function refreshDecks() {
+    const data = await getDecks();
+    setDecks(data);
+    if (data.length > 0 && selectedDeckId == null) {
+      setSelectedDeckId(data[0].id);
     }
   }
 
-  const selectedDeckObject = all_decks.find(deck => deck.deck_name === selected_deck);
+  // load decks when authed
+  useEffect(() => {
+    if (!authed) return;
+    refreshDecks().catch(() => {
+      // token might be invalid
+      localStorage.removeItem("token");
+      setAuthed(false);
+    });
+  }, [authed]);
+
+  // load cards when selection changes
+  useEffect(() => {
+    if (!authed) return;
+
+    if (typeof selectedDeckId !== "number") {
+      setCards([]);
+      return;
+    }
+
+    getCards(selectedDeckId).then(setCards);
+    setCurrentIndex(0);
+  }, [authed, selectedDeckId]);
+
+
+  // callbacks used by your existing UI
+
+  async function addDeck(newDeckLike) {
+    // your NewDeckForm passes { deck_name: ... }
+    const title = newDeckLike.deck_name;
+    const created = await createDeck(title);
+    await refreshDecks();
+    setSelectedDeckId(created.id);
+  }
+
+  async function addCard(deckId, card) {
+    // your NewCardForm passes { front, back }
+    await createCard(deckId, card.front, card.back);
+    const updated = await getCards(deckId);
+    setCards(updated);
+  }
+
+  function handleLogout() {
+    localStorage.removeItem("token");
+    setAuthed(false);
+    setAuthMode("login");
+  }
+
+
+  async function deleteCard(deckId, cardId) {
+    await apiDeleteCard(cardId);
+    const updated = await getCards(deckId);
+    setCards(updated);
+    setCurrentIndex(0);
+  }
+
+  async function deleteDeck(deckId) {
+    await apiDeleteDeck(deckId);
+    await refreshDecks();
+    if (deckId === selectedDeckId) setSelectedDeckId(null);
+  }
+
+  // Convert backend decks to the shape your Decks_Page expects
+  const deck_array_for_ui = decks.map((d) => ({
+    id: d.id,
+    deck_name: d.title, // UI expects deck_name
+    // We won't store app_deck_array here anymore
+  }));
+
+  const selectedDeckObject = decks.find((d) => d.id === selectedDeckId);
+  const deck_for_current = selectedDeckObject
+    ? {
+        id: selectedDeckObject.id,
+        deck_name: selectedDeckObject.title,
+        app_deck_array: cards, // Current_Deck expects this structure
+      }
+    : null;
+
+  if (!authed) {
+    return authMode === "login" ? (
+      <LoginPage
+        onLoggedIn={() => setAuthed(true)}
+        onGoToRegister={() => setAuthMode("register")}
+      />
+    ) : (
+      <RegisterPage
+        onLoggedIn={() => setAuthed(true)}
+        onGoToLogin={() => setAuthMode("login")}
+      />
+    );
+  }
 
   return (
     <>
-      <Decks_Page
-        deck_array={all_decks}
-        Dselected_deck={setSelectedDeck}
-        selectedDeck={selected_deck}
-        addDeck={addDeck}
-        addCard={addCard}
-        deleteCard={deleteCard}
-        deleteDeck={deleteDeck}
-        currentIndex={currentIndex}
-        setPendingCardDeck={setPendingCardDeck}
-      />
-      <Current_Deck deck={selectedDeckObject} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex}
-        selectedDeck={selected_deck} Dselected_deck={setSelectedDeck} addDeck={addDeck} addCard={addCard}
-        pendingCardDeck={pendingCardDeck} setPendingCardDeck={setPendingCardDeck} />
-    </>
-  );
+    <Account onLogout={handleLogout} />
+
+    <Decks_Page
+      deck_array={deck_array_for_ui}
+      Dselected_deck={(deckNameOrSentinel) => {
+        // support your sentinel logic:
+        if (deckNameOrSentinel === "NEW_DECK" || deckNameOrSentinel === "NEW_CARD") {
+          setSelectedDeckId(deckNameOrSentinel);
+          return;
+        }
+
+        // otherwise map deck name -> deck id
+        const deck = decks.find((d) => d.title === deckNameOrSentinel);
+        if (deck) setSelectedDeckId(deck.id);
+      }}
+      selectedDeck={
+        typeof selectedDeckId === "string"
+          ? selectedDeckId
+          : (selectedDeckObject ? selectedDeckObject.title : "")
+      }
+      addDeck={addDeck}
+      addCard={(deckName, card) => {
+        const deck = decks.find((d) => d.title === deckName);
+        if (deck) return addCard(deck.id, card);
+      }}
+      deleteCard={(deckName, cardId) => {
+        const deck = decks.find((d) => d.title === deckName);
+        if (deck) return deleteCard(deck.id, cardId);
+      }}
+      deleteDeck={(deckName) => {
+        const deck = decks.find((d) => d.title === deckName);
+        if (deck) return deleteDeck(deck.id);
+      }}
+      currentIndex={currentIndex}
+      setPendingCardDeck={(deckName) => {
+        const deck = decks.find((d) => d.title === deckName);
+        setPendingCardDeckId(deck ? deck.id : null);
+      }}
+    />
+
+    <Current_Deck
+      deck={deck_for_current}
+      currentIndex={currentIndex}
+      setCurrentIndex={setCurrentIndex}
+      selectedDeck={
+        typeof selectedDeckId === "string"
+          ? selectedDeckId
+          : (selectedDeckObject ? selectedDeckObject.title : "")
+      }
+      Dselected_deck={(nameOrSentinel) => {
+        if (nameOrSentinel === "NEW_DECK" || nameOrSentinel === "NEW_CARD") {
+          setSelectedDeckId(nameOrSentinel);
+          return;
+        }
+        const deck = decks.find((d) => d.title === nameOrSentinel);
+        if (deck) setSelectedDeckId(deck.id);
+      }}
+      addDeck={addDeck}
+      addCard={(deckName, card) => {
+        const deck = decks.find((d) => d.title === deckName);
+        if (deck) return addCard(deck.id, card);
+      }}
+      pendingCardDeck={pendingCardDeckId ? (decks.find(d => d.id === pendingCardDeckId)?.title ?? "") : ""}
+      setPendingCardDeck={() => {}}
+    />
+  </>
+);
 }
 
-
-export default App
+export default App;
