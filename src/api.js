@@ -25,23 +25,29 @@ async function request(path, options = {}) {
 }
 
 export async function login(email, password) {
-  // OAuth2 password flow expects form data: username + password
-  const body = new URLSearchParams();
-  body.append("username", email);
-  body.append("password", password);
-
   const res = await fetch(`${API_BASE}/auth/login`, {
     method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      username: email,
+      password,
+    }),
   });
 
-  if (!res.ok) throw new Error("Login failed");
-  const data = await res.json();
+  const data = await res.json().catch(() => ({}));
 
+  if (!res.ok) {
+    throw new Error(data.detail || `Login failed (${res.status})`);
+  }
+
+  // store + return token
   localStorage.setItem("token", data.access_token);
-  return data;
+  return data.access_token;
 }
+
+
 
 export async function register(email, password) {
   const res = await fetch(`${API_BASE}/auth/register`, {
@@ -50,13 +56,17 @@ export async function register(email, password) {
     body: JSON.stringify({ email, password }),
   });
 
+  const data = await res.json().catch(() => ({}));
+
   if (!res.ok) {
-    const text = await res.text();
-    throw new Error(text || "Register failed");
+    throw new Error(data.detail || `Register failed (${res.status})`);
   }
 
-  return res.json(); // depending on your backend, this might return a token or a message
+  // store and return token
+  localStorage.setItem("token", data.access_token);
+  return data.access_token;
 }
+
 
 
 

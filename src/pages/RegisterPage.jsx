@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { register, login } from "../api";
+import { register } from "../api";
 
 export default function RegisterPage({ onLoggedIn, onGoToLogin }) {
   const [email, setEmail] = useState("");
@@ -11,14 +11,10 @@ export default function RegisterPage({ onLoggedIn, onGoToLogin }) {
     setErr("");
 
     try {
-      await register(email, password);
-
-      // After successful register, log in (stores token)
-      await login(email, password);
-
-      onLoggedIn();
+      const newToken = await register(email, password); // token returned
+      onLoggedIn(newToken);                             // pass to App
     } catch (e) {
-      setErr("Register failed. Email may already exist or password too short.");
+      setErr(e?.message || "Register failed. Email may already exist or password too short.");
     }
   }
 

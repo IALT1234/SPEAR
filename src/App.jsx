@@ -16,7 +16,9 @@ import {
 } from "./api";
 
 function App() {
-  const [authed, setAuthed] = useState(!!localStorage.getItem("token"));
+
+  const [token, setToken] = useState(() => localStorage.getItem("token") || "");
+  const authed = !!token;
 
   const [decks, setDecks] = useState([]);
   const [selectedDeckId, setSelectedDeckId] = useState(null);
@@ -46,7 +48,7 @@ function App() {
     refreshDecks().catch(() => {
       // token might be invalid
       localStorage.removeItem("token");
-      setAuthed(false);
+      setToken("");
     });
   }, [authed]);
 
@@ -83,7 +85,7 @@ function App() {
 
   function handleLogout() {
     localStorage.removeItem("token");
-    setAuthed(false);
+    setToken("");
     setAuthMode("login");
   }
 
@@ -140,12 +142,17 @@ function App() {
   if (!authed) {
     return authMode === "login" ? (
       <LoginPage
-        onLoggedIn={() => setAuthed(true)}
+        onLoggedIn={(newToken) => {
+          setToken(newToken);
+        }}
         onGoToRegister={() => setAuthMode("register")}
       />
     ) : (
       <RegisterPage
-        onLoggedIn={() => setAuthed(true)}
+        onLoggedIn={(newToken) => {
+          localStorage.setItem("token", newToken);
+          setToken(newToken);
+        }}
         onGoToLogin={() => setAuthMode("login")}
       />
     );
