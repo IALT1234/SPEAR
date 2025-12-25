@@ -27,6 +27,8 @@ class DeckOut(BaseModel):
     class Config:
         from_attributes = True
 
+class DeckUpdate(BaseModel):
+    title: str
 
 #=============================== CARDS =============================
 class CardCreate(BaseModel):
@@ -43,5 +45,6 @@ class CardOut(BaseModel):
         from_attributes = True
 
 
-class DeckUpdate(BaseModel):
-    title: str
+class CardUpdate(BaseModel):
+    front: str
+    back: str
