@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { login } from "../api";
+import "../css/LoginPage.css";
 
 export default function LoginPage({ onLoggedIn, onGoToRegister }) {
   const [email, setEmail] = useState("");
@@ -13,8 +14,8 @@ export default function LoginPage({ onLoggedIn, onGoToRegister }) {
     setLoading(true);
 
     try {
-      const newToken = await login(email, password); // get token
-      onLoggedIn(newToken);                          // pass to App
+      const newToken = await login(email, password);
+      onLoggedIn(newToken);
     } catch (e) {
       setErr(e?.message || "Login failed. Check email/password.");
     } finally {
@@ -22,16 +23,14 @@ export default function LoginPage({ onLoggedIn, onGoToRegister }) {
     }
   }
 
-
   return (
-    <div style={{ padding: 24 }}>
-      <h2>Login</h2>
+  <div className="login-outer">
+    <div className="login-inner">
+      <h1 className="login-title">WELCOME TO SPEAR!</h1>
 
-      <form
-        onSubmit={handleSubmit}
-        style={{ display: "grid", gap: 12, maxWidth: 320 }}
-      >
+      <form className="login-form" onSubmit={handleSubmit}>
         <input
+          className="login-form-section login-form_input_EMAIL"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
@@ -39,6 +38,7 @@ export default function LoginPage({ onLoggedIn, onGoToRegister }) {
         />
 
         <input
+          className="login-form-section login-form_input_PASSWORD"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
@@ -46,16 +46,28 @@ export default function LoginPage({ onLoggedIn, onGoToRegister }) {
           disabled={loading}
         />
 
-        <button type="submit" disabled={loading}>
+        <button
+          className="login-form-section login-form_input_SUBMIT"
+          type="submit"
+          disabled={loading}
+        >
           {loading ? "Logging in..." : "Login"}
         </button>
 
-        <button type="button" onClick={onGoToRegister} disabled={loading}>
+        <button
+          className="login-form-section login-form_input_REGISTER"
+          type="button"
+          onClick={onGoToRegister}
+          disabled={loading}
+        >
           Need an account? Register
         </button>
-
-        {err && <p style={{ color: "red" }}>{err}</p>}
       </form>
+
+      {err && (
+        <p style={{ color: "red", textAlign: "center", marginTop: 12 }}>{err}</p>
+      )}
     </div>
+  </div>
   );
 }
