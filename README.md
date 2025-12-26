@@ -125,7 +125,7 @@ Assets live in `src/assets/`.
 
 
 
-Frontend (flashcards-app/)
+Frontend (SPEAR/)
 
 - src/App.jsx — app root, auth gating, main UI
 
