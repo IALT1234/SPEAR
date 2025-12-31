@@ -79,6 +79,7 @@ function Decks_Page(props) {
                   className={`deck-button ${props.selectedDeck === deck.deck_name ? "active" : ""}`}
                   onClick={() => {
                     props.setMode("view");
+                    props.clearPendingCardDeck?.();
                     props.Dselected_deck(deck.deck_name);
                     setclicked_delete_deck(false);
                     setclicked_delete_card(false);
@@ -145,6 +146,7 @@ function Decks_Page(props) {
 
 
               <button className="option-button option-add-card" onClick={() => {
+                if (!props.selectedDeck) return;
                 props.setMode("create-card");
                 props.setPendingCardDeck(props.selectedDeck);
 
@@ -199,6 +201,7 @@ function Decks_Page(props) {
 
 
               <button className="option-button arrow-button option-close" onClick = { () =>  {
+                    props.setMode("view");
               
                     options_clicked()
                     setclicked_delete_deck(false);
