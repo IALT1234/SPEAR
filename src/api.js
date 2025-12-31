@@ -14,12 +14,17 @@ async function request(path, options = {}) {
     },
   });
 
+  // if token is invalid or expired, force logout everywhere
+  if (res.status === 401) {
+    localStorage.removeItem("token");
+    throw new Error("401 Unauthorized: Session expired. Please log in again.");
+  }
+
   if (!res.ok) {
     const text = await res.text();
     throw new Error(`${res.status} ${res.statusText}: ${text}`);
   }
 
-  // 204 has no body
   if (res.status === 204) return null;
   return res.json();
 }

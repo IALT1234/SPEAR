@@ -68,6 +68,21 @@ function App() {
   }, [authed, selectedDeckId]);
 
 
+  useEffect(() => {
+    // if token is removed (401 in api.js), reset app state
+    if (!authed) {
+      setDecks([]);
+      setCards([]);
+      setSelectedDeckId(null);
+      setCurrentIndex(0);
+      setPendingCardDeckId(null);
+      setMode("view");
+      setAuthMode("login");
+    }
+  }, [authed]);
+
+
+
   // callbacks used by your existing UI
 
   async function addDeck(newDeckLike) {
@@ -252,7 +267,7 @@ function App() {
       mode={mode}
       setMode={setMode}
 
-      
+
       updateDeckName={updateDeckName}
       updateCardText={updateCardText}
     />
