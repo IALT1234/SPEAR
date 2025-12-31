@@ -222,8 +222,8 @@
   grid-template-columns: 1fr 1fr 80px;
   grid-template-rows: 1fr 1fr;
   grid-template-areas:
-    "createDeck addCard arrow"
-    "deleteDeck deleteCard arrow";
+    "editDeck deleteDeck createDeck arrow"
+    "editCard deleteCard addCard arrow";
 }
 /* ===========================
    GRID AREA MAPPING (OPTION BUTTONS)
@@ -235,7 +235,8 @@
 .option-delete-card { grid-area: deleteCard; }
 .option-close       { grid-area: arrow; }
 
-
+.option-edit-card   { grid-area: editCard; }
+.option-edit-deck   { grid-area: editDeck; }
 
 .back_from_dock_options{
   font-family: 'Caveat', cursive;

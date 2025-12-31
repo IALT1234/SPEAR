@@ -116,6 +116,34 @@ function Decks_Page(props) {
                 CREATE<br />DECK
               </button>
 
+
+              <button
+                className="option-button option-edit-deck"
+                onClick={() => {
+                  if (!props.selectedDeck) return;
+                  props.setMode("edit-deck");
+                  setclicked_delete_deck(false);
+                  setclicked_delete_card(false);
+                }}
+              >
+                EDIT<br />DECK
+              </button>
+
+
+
+              <button
+                className="option-button option-edit-card"
+                onClick={() => {
+                  if (!props.cardsCount || props.cardsCount < 1) return;
+                  props.setMode("edit-card");
+                  setclicked_delete_deck(false);
+                  setclicked_delete_card(false);
+                }}
+              >
+                EDIT<br />CARD
+              </button>
+
+
               <button className="option-button option-add-card" onClick={() => {
                 props.setMode("create-card");
                 props.setPendingCardDeck(props.selectedDeck);
@@ -191,3 +219,5 @@ function Decks_Page(props) {
 
 
 export default Decks_Page;
+
+

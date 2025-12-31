@@ -4,7 +4,11 @@ import "../css/Current_Deck.css";
 import NewDeckForm from "./NewDeckForm";
 import NewCardForm from "./NewCardForm";
 
-function Current_Deck({ deck, currentIndex, setCurrentIndex, selectedDeck, Dselected_deck, addDeck, addCard, pendingCardDeck, setPendingCardDeck, mode, setMode }) {
+import EditDeckForm from "./EditDeckForm";
+import EditCardForm from "./EditCardForm";
+
+
+function Current_Deck({ deck, currentIndex, setCurrentIndex, selectedDeck, Dselected_deck, addDeck, addCard, pendingCardDeck, setPendingCardDeck, mode, setMode, updateDeckName, updateCardText}) {
   // if creating a new deck, render the NewDeckForm
   if (mode === "create-deck") {
     return (
@@ -37,6 +41,48 @@ function Current_Deck({ deck, currentIndex, setCurrentIndex, selectedDeck, Dsele
       </div>
     );
   }
+
+
+  // EDIT DECK
+  if (mode === "edit-deck") {
+    return (
+      <div className="deck-container">
+        <EditDeckForm
+          initialName={deck?.deck_name || ""}
+          onSave={async (newName) => {
+            await updateDeckName(deck.id, newName);
+            setMode("view");
+          }}
+          onCancel={() => setMode("view")}
+        />
+      </div>
+    );
+  }
+
+  // EDIT CARD
+  if (mode === "edit-card") {
+    const cards = deck?.app_deck_array ?? [];
+    const current = cards[currentIndex];
+
+    if (!current) return <p>No card to edit.</p>;
+
+    return (
+      <div className="card-container">
+        <EditCardForm
+          initialFront={current.front}
+          initialBack={current.back}
+          onSave={async ({ front, back }) => {
+            await updateCardText(current.id, front, back);
+            setMode("view");
+          }}
+          onCancel={() => setMode("view")}
+        />
+      </div>
+    );
+  }
+
+
+
 
   if (!deck) return <p>Please select a deck</p>;
 

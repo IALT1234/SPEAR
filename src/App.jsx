@@ -9,9 +9,11 @@ import Account from "./components/Account";
 import {
   getDecks,
   createDeck,
+  updateDeck,          
   deleteDeck as apiDeleteDeck,
   getCards,
   createCard,
+  updateCard,          
   deleteCard as apiDeleteCard,
 } from "./api";
 
@@ -123,6 +125,25 @@ function App() {
     if (deckId === selectedDeckId) setSelectedDeckId(null);
   }
 
+
+
+  async function updateDeckName(deckId, newTitle) {
+    await updateDeck(deckId, newTitle);
+    await refreshDecks();
+  }
+
+  async function updateCardText(cardId, front, back) {
+    await updateCard(cardId, front, back);
+    if (typeof selectedDeckId === "number") {
+      const updated = await getCards(selectedDeckId);
+      setCards(updated);
+    }
+  }
+
+
+
+
+
   // Convert backend decks to the shape your Decks_Page expects
   const deck_array_for_ui = decks.map((d) => ({
     id: d.id,
@@ -231,6 +252,9 @@ function App() {
       mode={mode}
       setMode={setMode}
 
+      
+      updateDeckName={updateDeckName}
+      updateCardText={updateCardText}
     />
   </>
 );
