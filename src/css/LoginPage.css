@@ -1,0 +1,97 @@
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+.login-title {
+  font-family: 'Caveat', cursive;
+  font-size: 3rem;
+  color: #ffffff;
+  margin-bottom: 24px;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+.login-form {
+  font-family: 'Caveat', cursive;
+  font-weight: bold;
+  font-size: 1.4rem;
+  background-color: #e0aa6d;
+  border: 2px solid #e0aa6d;
+  width: 350px;
+  display: grid;
+  gap: 10px;
+  padding: 20px;
+  grid-template-rows: repeat(4, auto);
+  grid-template-areas:
+    "email"
+    "password"
+    "submit"
+    "register";
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+}
+/* Consistent spacing and styling */
+.login-form-section {
+  font-family: 'Caveat', cursive;
+  font-weight: bold;
+  font-size: 1.3rem;
+  padding: 12px;
+  background-color: #e0aa6d;
+  color: #ffffff;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+.login-form-section:hover {
+  background-color: #f3ae55;
+  cursor: pointer;
+}
+
+.login-form_input_EMAIL {
+  grid-area: email;
+}
+
+.login-form_input_PASSWORD {
+  grid-area: password;
+}
+
+.login-form_input_SUBMIT {
+  grid-area: submit;
+  background-color: #ebaa61;
+}
+
+.login-form_input_SUBMIT:hover {
+  background-color: #f3ae55;
+}
+
+.login-form_input_REGISTER {
+  grid-area: register;
+  background-color: #ebaa61;
+}
+
+.login-form_input_REGISTER:hover {
+  background-color: #f3ae55;
+}
+.login-outer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.login-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

@@ -1,10 +1,14 @@
-.account-container {
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  z-index: 1000;
+:root {
+  --logout-reserve: 110px;  /* space reserved for the logout area */
+  --page-pad: 24px;         /* matches your layout padding */
 }
 
+.account-container {
+  position: fixed;
+  top: var(--page-pad);
+  right: var(--page-pad);
+  z-index: 9999;
+}
 .logout-button {
   background-color: transparent;
   border: 2px solid red;

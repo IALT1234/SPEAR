@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { register, login } from "../api";
+import { register } from "../api";
+import "../css/LoginPage.css"; // Reuse the same styles!
 
 export default function RegisterPage({ onLoggedIn, onGoToLogin }) {
   const [email, setEmail] = useState("");
@@ -11,32 +12,57 @@ export default function RegisterPage({ onLoggedIn, onGoToLogin }) {
     setErr("");
 
     try {
-      await register(email, password);
-
-      // After successful register, log in (stores token)
-      await login(email, password);
-
-      onLoggedIn();
+      const newToken = await register(email, password);
+      onLoggedIn(newToken);
     } catch (e) {
-      setErr("Register failed. Email may already exist or password too short.");
+      setErr(
+        e?.message ||
+          "Register failed. Email may already exist or password too short."
+      );
     }
   }
 
   return (
-    <div style={{ padding: 24 }}>
-      <h2>Create account</h2>
+    <div className="login-outer">
+      <div className="login-inner">
+        <h1 className="login-title">CREATE YOUR SPEAR ACCOUNT</h1>
 
-      <form onSubmit={handleSubmit} style={{ display: "grid", gap: 12, maxWidth: 320 }}>
-        <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-        <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password (min 8)" type="password" />
-        <button type="submit">Register</button>
+        <form className="login-form" onSubmit={handleSubmit}>
+          <input
+            className="login-form-section login-form_input_EMAIL"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+          />
+          <input
+            className="login-form-section login-form_input_PASSWORD"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password (min 8)"
+            type="password"
+          />
+          <button
+            className="login-form-section login-form_input_SUBMIT"
+            type="submit"
+          >
+            Register
+          </button>
 
-        <button type="button" onClick={onGoToLogin}>
-          Already have an account? Login
-        </button>
+          <button
+            className="login-form-section login-form_input_REGISTER"
+            type="button"
+            onClick={onGoToLogin}
+          >
+            Already have an account? Login
+          </button>
+        </form>
 
-        {err && <p style={{ color: "red" }}>{err}</p>}
-      </form>
+        {err && (
+          <p style={{ color: "red", textAlign: "center", marginTop: 12 }}>
+            {err}
+          </p>
+        )}
+      </div>
     </div>
   );
 }

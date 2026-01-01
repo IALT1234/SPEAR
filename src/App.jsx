@@ -5,18 +5,24 @@ import LoginPage from "./pages/LoginPage";
 
 import RegisterPage from "./pages/RegisterPage";
 import Account from "./components/Account";
+import "./App.css";
+
 
 import {
   getDecks,
   createDeck,
+  updateDeck,          
   deleteDeck as apiDeleteDeck,
   getCards,
   createCard,
+  updateCard,          
   deleteCard as apiDeleteCard,
 } from "./api";
 
 function App() {
-  const [authed, setAuthed] = useState(!!localStorage.getItem("token"));
+
+  const [token, setToken] = useState(() => localStorage.getItem("token") || "");
+  const authed = !!token;
 
   const [decks, setDecks] = useState([]);
   const [selectedDeckId, setSelectedDeckId] = useState(null);
@@ -29,6 +35,7 @@ function App() {
 
   const [authMode, setAuthMode] = useState("login"); // "login" or "register"
 
+  const [mode, setMode] = useState("view");
 
   // load decks after login
   async function refreshDecks() {
@@ -45,7 +52,7 @@ function App() {
     refreshDecks().catch(() => {
       // token might be invalid
       localStorage.removeItem("token");
-      setAuthed(false);
+      setToken("");
     });
   }, [authed]);
 
@@ -61,6 +68,21 @@ function App() {
     getCards(selectedDeckId).then(setCards);
     setCurrentIndex(0);
   }, [authed, selectedDeckId]);
+
+
+  useEffect(() => {
+    // if token is removed (401 in api.js), reset app state
+    if (!authed) {
+      setDecks([]);
+      setCards([]);
+      setSelectedDeckId(null);
+      setCurrentIndex(0);
+      setPendingCardDeckId(null);
+      setMode("view");
+      setAuthMode("login");
+    }
+  }, [authed]);
+
 
 
   // callbacks used by your existing UI
@@ -82,7 +104,7 @@ function App() {
 
   function handleLogout() {
     localStorage.removeItem("token");
-    setAuthed(false);
+    setToken("");
     setAuthMode("login");
   }
 
@@ -94,11 +116,50 @@ function App() {
     setCurrentIndex(0);
   }
 
+
+  async function deleteCurrentCard() {
+    if (typeof selectedDeckId !== "number") return;
+    const current = cards[currentIndex];
+    if (!current) return;
+
+    await apiDeleteCard(current.id);
+
+    const updated = await getCards(selectedDeckId);
+    setCards(updated);
+
+    // keep index in range
+    setCurrentIndex((prev) => {
+      const nextMax = Math.max(updated.length - 1, 0);
+      return Math.min(prev, nextMax);
+    });
+  }
+
+
+
   async function deleteDeck(deckId) {
     await apiDeleteDeck(deckId);
     await refreshDecks();
     if (deckId === selectedDeckId) setSelectedDeckId(null);
   }
+
+
+
+  async function updateDeckName(deckId, newTitle) {
+    await updateDeck(deckId, newTitle);
+    await refreshDecks();
+  }
+
+  async function updateCardText(cardId, front, back) {
+    await updateCard(cardId, front, back);
+    if (typeof selectedDeckId === "number") {
+      const updated = await getCards(selectedDeckId);
+      setCards(updated);
+    }
+  }
+
+
+
+
 
   // Convert backend decks to the shape your Decks_Page expects
   const deck_array_for_ui = decks.map((d) => ({
@@ -119,12 +180,17 @@ function App() {
   if (!authed) {
     return authMode === "login" ? (
       <LoginPage
-        onLoggedIn={() => setAuthed(true)}
+        onLoggedIn={(newToken) => {
+          setToken(newToken);
+        }}
         onGoToRegister={() => setAuthMode("register")}
       />
     ) : (
       <RegisterPage
-        onLoggedIn={() => setAuthed(true)}
+        onLoggedIn={(newToken) => {
+          localStorage.setItem("token", newToken);
+          setToken(newToken);
+        }}
         onGoToLogin={() => setAuthMode("login")}
       />
     );
@@ -132,71 +198,89 @@ function App() {
 
   return (
     <>
+
+
+
     <Account onLogout={handleLogout} />
 
-    <Decks_Page
-      deck_array={deck_array_for_ui}
-      Dselected_deck={(deckNameOrSentinel) => {
-        // support your sentinel logic:
-        if (deckNameOrSentinel === "NEW_DECK" || deckNameOrSentinel === "NEW_CARD") {
-          setSelectedDeckId(deckNameOrSentinel);
-          return;
+
+    <div className="app-center">
+
+      <Decks_Page
+        deck_array={deck_array_for_ui}
+        Dselected_deck={(deckNameOrSentinel) => {
+          // support your sentinel logic:
+
+
+          // otherwise map deck name -> deck id
+          const deck = decks.find((d) => d.title === deckNameOrSentinel);
+          if (deck) setSelectedDeckId(deck.id);
+        }}
+        selectedDeck={
+          typeof selectedDeckId === "string"
+            ? selectedDeckId
+            : (selectedDeckObject ? selectedDeckObject.title : "")
+        }
+        addDeck={addDeck}
+        addCard={(deckName, card) => {
+          const deck = decks.find((d) => d.title === deckName);
+          if (deck) return addCard(deck.id, card);
+        }}
+        deleteCard={(deckName, cardId) => {
+          const deck = decks.find((d) => d.title === deckName);
+          if (deck) return deleteCard(deck.id, cardId);
+        }}
+
+        deleteCurrentCard={deleteCurrentCard}
+        cardsCount={cards.length}
+
+        deleteDeck={(deckName) => {
+          const deck = decks.find((d) => d.title === deckName);
+          if (deck) return deleteDeck(deck.id);
+        }}
+        currentIndex={currentIndex}
+        setPendingCardDeck={(deckName) => {
+          const deck = decks.find((d) => d.title === deckName);
+          setPendingCardDeckId(deck ? deck.id : null);
+        }}
+
+        setMode={setMode}
+
+      />
+
+      <Current_Deck
+        deck={deck_for_current}
+        currentIndex={currentIndex}
+        setCurrentIndex={setCurrentIndex}
+        selectedDeck={
+          typeof selectedDeckId === "string"
+            ? selectedDeckId
+            : (selectedDeckObject ? selectedDeckObject.title : "")
         }
 
-        // otherwise map deck name -> deck id
-        const deck = decks.find((d) => d.title === deckNameOrSentinel);
-        if (deck) setSelectedDeckId(deck.id);
-      }}
-      selectedDeck={
-        typeof selectedDeckId === "string"
-          ? selectedDeckId
-          : (selectedDeckObject ? selectedDeckObject.title : "")
-      }
-      addDeck={addDeck}
-      addCard={(deckName, card) => {
-        const deck = decks.find((d) => d.title === deckName);
-        if (deck) return addCard(deck.id, card);
-      }}
-      deleteCard={(deckName, cardId) => {
-        const deck = decks.find((d) => d.title === deckName);
-        if (deck) return deleteCard(deck.id, cardId);
-      }}
-      deleteDeck={(deckName) => {
-        const deck = decks.find((d) => d.title === deckName);
-        if (deck) return deleteDeck(deck.id);
-      }}
-      currentIndex={currentIndex}
-      setPendingCardDeck={(deckName) => {
-        const deck = decks.find((d) => d.title === deckName);
-        setPendingCardDeckId(deck ? deck.id : null);
-      }}
-    />
+        Dselected_deck={(name) => {
+          const deck = decks.find((d) => d.title === name);
+          if (deck) setSelectedDeckId(deck.id);
+        }}
 
-    <Current_Deck
-      deck={deck_for_current}
-      currentIndex={currentIndex}
-      setCurrentIndex={setCurrentIndex}
-      selectedDeck={
-        typeof selectedDeckId === "string"
-          ? selectedDeckId
-          : (selectedDeckObject ? selectedDeckObject.title : "")
-      }
-      Dselected_deck={(nameOrSentinel) => {
-        if (nameOrSentinel === "NEW_DECK" || nameOrSentinel === "NEW_CARD") {
-          setSelectedDeckId(nameOrSentinel);
-          return;
-        }
-        const deck = decks.find((d) => d.title === nameOrSentinel);
-        if (deck) setSelectedDeckId(deck.id);
-      }}
-      addDeck={addDeck}
-      addCard={(deckName, card) => {
-        const deck = decks.find((d) => d.title === deckName);
-        if (deck) return addCard(deck.id, card);
-      }}
-      pendingCardDeck={pendingCardDeckId ? (decks.find(d => d.id === pendingCardDeckId)?.title ?? "") : ""}
-      setPendingCardDeck={() => {}}
-    />
+        
+        addDeck={addDeck}
+        addCard={(deckName, card) => {
+          const deck = decks.find((d) => d.title === deckName);
+          if (deck) return addCard(deck.id, card);
+        }}
+        pendingCardDeck={pendingCardDeckId ? (decks.find(d => d.id === pendingCardDeckId)?.title ?? "") : ""}
+        setPendingCardDeck={() => {}}
+
+        mode={mode}
+        setMode={setMode}
+
+
+        updateDeckName={updateDeckName}
+        updateCardText={updateCardText}
+      />
+
+  </div>
   </>
 );
 }
