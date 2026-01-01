@@ -1,25 +1,57 @@
 .flash-card {
-  
   width: 600px;
   height: 350px;
-  background-color: #ebaa61;;
-  border: 16px solid #e0aa6d;  font-size: 32px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
+
+  /* flip setup */
+  perspective: 1200px;
+
   cursor: pointer;
   transition: transform 0.3s;
-
-  font-family: 'Caveat', cursive;
-  font-weight: bold;
-
 }
 
 .flash-card:hover {
   transform: scale(1.02);
 }
 
+/* the flipping wrapper */
+.flash-card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
 
+  transform-style: preserve-3d;
+  transition: transform 450ms ease;
+}
+
+.flash-card-inner.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.flash-card-face {
+  position: absolute;
+  inset: 0;
+
+  background-color: #ebaa61;
+  border: 16px solid #e0aa6d;
+  font-size: 32px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
+
+  font-family: "Caveat", cursive;
+  font-weight: bold;
+
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flash-card-front {
+  transform: rotateY(0deg);
+}
+
+.flash-card-back {
+  transform: rotateY(180deg);
+}
