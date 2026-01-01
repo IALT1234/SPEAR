@@ -3,9 +3,9 @@
 A full-stack flashcards app with a React (Vite) frontend and a FastAPI backend. Users can register/login, create and manage decks and cards, and browse flashcards in a clean card-style UI. All data is stored in a database and scoped per user via JWT authentication.
 
 ### App Demonstration
-![SPEAR Image](src/images/firefox_B8CgqbZYwE.gif)
+![SPEAR Image](src/images/DEMO_2026.gif)
 ### Authentication Demonstration
-![SPEAR Image](src/images/auth_demostration.gif)
+![SPEAR Image](src/images/LOGIN_DEMO_2026.gif)
 
 
 ## Features
