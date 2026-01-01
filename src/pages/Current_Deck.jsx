@@ -73,6 +73,64 @@ function Current_Deck({
     }
   }, [renderTotal, currentIndex, setCurrentIndex]);
 
+
+
+
+
+
+
+
+
+
+
+
+  const [renderCardIndex, setRenderCardIndex] = useState(currentIndex);
+  const [cardAnim, setCardAnim] = useState("in"); // "in" | "out"
+  const [cardDir, setCardDir] = useState("next"); // "next" | "prev"
+  const prevCardIndexRef = useRef(currentIndex);
+
+  // Animate when switching cards (same deck)
+  useEffect(() => {
+    if (mode !== "view") return;
+    if (!renderDeck) return;
+    if (renderTotal < 1) return;
+
+    const prev = prevCardIndexRef.current;
+    const next = currentIndex;
+
+    if (next === prev) return;
+
+    // Detect direction (handle wrap-around)
+    let dir = next > prev ? "next" : "prev";
+    if (prev === renderTotal - 1 && next === 0) dir = "next";      // wrap forward
+    if (prev === 0 && next === renderTotal - 1) dir = "prev";      // wrap backward
+
+    setCardDir(dir);
+    setCardAnim("out");
+
+    const t = setTimeout(() => {
+      setRenderCardIndex(next);
+      prevCardIndexRef.current = next;
+      setCardAnim("in");
+    }, 220); // MUST match CSS duration
+
+    return () => clearTimeout(t);
+  }, [currentIndex, renderDeck, renderTotal, mode]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // ----------------------------
   // Mode-based UI (no early returns)
   // ----------------------------
@@ -152,20 +210,26 @@ function Current_Deck({
         setCurrentIndex((prev) => (prev - 1 + renderTotal) % renderTotal);
       }
 
-      const safeIndex = Math.min(currentIndex, renderTotal - 1);
+      const safeRenderIndex = Math.min(renderCardIndex, renderTotal - 1);
 
       content = (
         <div className="deck-container">
           <div className="nav-button left" onClick={prevCard}></div>
-            <div className="deck-slide-viewport">
-                <div className={`deck-slide ${animState === "out" ? "slide-out" : "slide-in"}`}>
-                  <FlashCard
-                    key={renderCards[safeIndex].id}
-                    card_front={renderCards[safeIndex].front}
-                    card_back={renderCards[safeIndex].back}
-                  />
+
+          <div className="deck-slide-viewport">
+            <div className={`deck-slide ${animState === "out" ? "slide-out" : "slide-in"}`}>
+              <div className="card-slide-viewport">
+                <div
+                  className={`card-slide ${
+                    cardAnim === "out"
+                      ? (cardDir === "next" ? "card-out-next" : "card-out-prev")
+                      : (cardDir === "next" ? "card-in-next" : "card-in-prev")
+                }`}>
+                  <FlashCard key={renderCards[safeRenderIndex].id} card_front={renderCards[safeRenderIndex].front} card_back={renderCards[safeRenderIndex].back}/>
                 </div>
+              </div>
             </div>
+          </div>
 
           <div className="nav-button right" onClick={nextCard}></div>
         </div>

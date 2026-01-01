@@ -84,3 +84,55 @@
   from { transform: translateY(120%); }
   to   { transform: translateY(0); }
 }
+
+
+/* viewport that clips the animation (so it doesn't sweep over the deck bar)
+.card-slide-viewport {
+  position: relative;
+  overflow: hidden;
+} */
+
+/* the element that actually moves */
+.card-slide {
+  will-change: transform;
+}
+
+/* OLD card leaves to the left when going next */
+.card-slide.card-out-next {
+  animation: cardOutLeft 220ms ease-in forwards;
+}
+
+/* NEW card enters from the right when going next */
+.card-slide.card-in-next {
+  animation: cardInRight 220ms ease-out forwards;
+}
+
+/* OLD card leaves to the right when going prev */
+.card-slide.card-out-prev {
+  animation: cardOutRight 220ms ease-in forwards;
+}
+
+/* NEW card enters from the left when going prev */
+.card-slide.card-in-prev {
+  animation: cardInLeft 220ms ease-out forwards;
+}
+
+@keyframes cardOutLeft {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-120%); }
+}
+
+@keyframes cardInRight {
+  from { transform: translateX(120%); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes cardOutRight {
+  from { transform: translateX(0); }
+  to   { transform: translateX(120%); }
+}
+
+@keyframes cardInLeft {
+  from { transform: translateX(-120%); }
+  to   { transform: translateX(0); }
+}
