@@ -4,7 +4,11 @@
     align-items: center;
     justify-content: center;
     margin-top: 50px;
-    gap: 120px; /* more space between arrows and card */
+    gap: 120px; 
+
+    position: relative;
+    z-index: 1;
+
 }
 
 .card-container {
@@ -47,4 +51,36 @@
 .flashcard, .card, .flash-card {
   width: min(750px, 86vw);
   height: 420px;
+}
+
+
+
+/* .deck-slide-viewport {
+  position: relative;
+  overflow: hidden;
+} */
+
+/* wrapper around the FlashCard that animates */
+.deck-slide {
+  will-change: transform;
+}
+
+/* old deck leaves upward */
+.deck-slide.slide-out {
+  animation: deckSlideOutUp 280ms ease-in forwards;
+}
+
+/* new deck comes from below */
+.deck-slide.slide-in {
+  animation: deckSlideInUp 280ms ease-out forwards;
+}
+
+@keyframes deckSlideOutUp {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-120%); }
+}
+
+@keyframes deckSlideInUp {
+  from { transform: translateY(120%); }
+  to   { transform: translateY(0); }
 }
