@@ -275,7 +275,6 @@ function App() {
         mode={mode}
         setMode={setMode}
 
-
         updateDeckName={updateDeckName}
         updateCardText={updateCardText}
       />
