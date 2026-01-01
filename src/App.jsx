@@ -5,6 +5,8 @@ import LoginPage from "./pages/LoginPage";
 
 import RegisterPage from "./pages/RegisterPage";
 import Account from "./components/Account";
+import "./App.css";
+
 
 import {
   getDecks,
@@ -196,81 +198,89 @@ function App() {
 
   return (
     <>
+
+
+
     <Account onLogout={handleLogout} />
 
-    <Decks_Page
-      deck_array={deck_array_for_ui}
-      Dselected_deck={(deckNameOrSentinel) => {
-        // support your sentinel logic:
+
+    <div className="app-center">
+
+      <Decks_Page
+        deck_array={deck_array_for_ui}
+        Dselected_deck={(deckNameOrSentinel) => {
+          // support your sentinel logic:
 
 
-        // otherwise map deck name -> deck id
-        const deck = decks.find((d) => d.title === deckNameOrSentinel);
-        if (deck) setSelectedDeckId(deck.id);
-      }}
-      selectedDeck={
-        typeof selectedDeckId === "string"
-          ? selectedDeckId
-          : (selectedDeckObject ? selectedDeckObject.title : "")
-      }
-      addDeck={addDeck}
-      addCard={(deckName, card) => {
-        const deck = decks.find((d) => d.title === deckName);
-        if (deck) return addCard(deck.id, card);
-      }}
-      deleteCard={(deckName, cardId) => {
-        const deck = decks.find((d) => d.title === deckName);
-        if (deck) return deleteCard(deck.id, cardId);
-      }}
+          // otherwise map deck name -> deck id
+          const deck = decks.find((d) => d.title === deckNameOrSentinel);
+          if (deck) setSelectedDeckId(deck.id);
+        }}
+        selectedDeck={
+          typeof selectedDeckId === "string"
+            ? selectedDeckId
+            : (selectedDeckObject ? selectedDeckObject.title : "")
+        }
+        addDeck={addDeck}
+        addCard={(deckName, card) => {
+          const deck = decks.find((d) => d.title === deckName);
+          if (deck) return addCard(deck.id, card);
+        }}
+        deleteCard={(deckName, cardId) => {
+          const deck = decks.find((d) => d.title === deckName);
+          if (deck) return deleteCard(deck.id, cardId);
+        }}
 
-      deleteCurrentCard={deleteCurrentCard}
-      cardsCount={cards.length}
+        deleteCurrentCard={deleteCurrentCard}
+        cardsCount={cards.length}
 
-      deleteDeck={(deckName) => {
-        const deck = decks.find((d) => d.title === deckName);
-        if (deck) return deleteDeck(deck.id);
-      }}
-      currentIndex={currentIndex}
-      setPendingCardDeck={(deckName) => {
-        const deck = decks.find((d) => d.title === deckName);
-        setPendingCardDeckId(deck ? deck.id : null);
-      }}
+        deleteDeck={(deckName) => {
+          const deck = decks.find((d) => d.title === deckName);
+          if (deck) return deleteDeck(deck.id);
+        }}
+        currentIndex={currentIndex}
+        setPendingCardDeck={(deckName) => {
+          const deck = decks.find((d) => d.title === deckName);
+          setPendingCardDeckId(deck ? deck.id : null);
+        }}
 
-      setMode={setMode}
+        setMode={setMode}
 
-    />
+      />
 
-    <Current_Deck
-      deck={deck_for_current}
-      currentIndex={currentIndex}
-      setCurrentIndex={setCurrentIndex}
-      selectedDeck={
-        typeof selectedDeckId === "string"
-          ? selectedDeckId
-          : (selectedDeckObject ? selectedDeckObject.title : "")
-      }
+      <Current_Deck
+        deck={deck_for_current}
+        currentIndex={currentIndex}
+        setCurrentIndex={setCurrentIndex}
+        selectedDeck={
+          typeof selectedDeckId === "string"
+            ? selectedDeckId
+            : (selectedDeckObject ? selectedDeckObject.title : "")
+        }
 
-      Dselected_deck={(name) => {
-        const deck = decks.find((d) => d.title === name);
-        if (deck) setSelectedDeckId(deck.id);
-      }}
+        Dselected_deck={(name) => {
+          const deck = decks.find((d) => d.title === name);
+          if (deck) setSelectedDeckId(deck.id);
+        }}
 
-      
-      addDeck={addDeck}
-      addCard={(deckName, card) => {
-        const deck = decks.find((d) => d.title === deckName);
-        if (deck) return addCard(deck.id, card);
-      }}
-      pendingCardDeck={pendingCardDeckId ? (decks.find(d => d.id === pendingCardDeckId)?.title ?? "") : ""}
-      setPendingCardDeck={() => {}}
+        
+        addDeck={addDeck}
+        addCard={(deckName, card) => {
+          const deck = decks.find((d) => d.title === deckName);
+          if (deck) return addCard(deck.id, card);
+        }}
+        pendingCardDeck={pendingCardDeckId ? (decks.find(d => d.id === pendingCardDeckId)?.title ?? "") : ""}
+        setPendingCardDeck={() => {}}
 
-      mode={mode}
-      setMode={setMode}
+        mode={mode}
+        setMode={setMode}
 
 
-      updateDeckName={updateDeckName}
-      updateCardText={updateCardText}
-    />
+        updateDeckName={updateDeckName}
+        updateCardText={updateCardText}
+      />
+
+  </div>
   </>
 );
 }

@@ -42,3 +42,9 @@
     transform: scale(1.15);
     filter: brightness(1.1);
 }
+
+
+.flashcard, .card, .flash-card {
+  width: min(750px, 86vw);
+  height: 420px;
+}
