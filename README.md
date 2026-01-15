@@ -162,11 +162,11 @@ Backend (backend/)
 
 Short term
 
-- Connect the UI 100% to backend IDs (remove any remaining sentinel UI modes)
+- Include checkmark in Flashcard component for users to keep track of their answers
 
-- Add better error + loading states in the UI
+- Create functions to hanlde data collected with C#
 
-- Improve delete confirmations and empty states
+- Display user statistics in User component
 
 Medium term
 
