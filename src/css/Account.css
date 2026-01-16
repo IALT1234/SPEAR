@@ -1,24 +1,179 @@
 :root {
-  --logout-reserve: 110px;  /* space reserved for the logout area */
-  --page-pad: 24px;         /* matches your layout padding */
+  --logout-reserve: 110px;
+  --page-pad: 24px;
+
+  /* App-ish palette (warm paper + tan accents) */
+  --paper: #fffaf1;
+  --panel: #ffffff;
+  --tan: #ebaa61;
+  --tan-2: #e0aa6d;
+  --ink: #3a2a1f;
+  --muted: rgba(58, 42, 31, 0.65);
+  --shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+  --soft-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
 }
 
 .account-container {
   position: fixed;
-  top: var(--page-pad);
+  bottom: var(--page-pad);   /* 👈 move to lower side */
   right: var(--page-pad);
   z-index: 9999;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-end;
 }
-.logout-button {
-  background-color: transparent;
-  border: 2px solid red;
-  color: red;
-  padding: 6px 12px;
-  font-weight: bold;
+
+/* Stats panel */
+.stats-panel {
+  background: var(--panel);
+  border: 3px solid rgba(224, 170, 109, 0.9);
+  border-radius: 14px;
+  padding: 14px 14px 12px;
+  min-width: 320px;
+
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(2px);
+}
+
+/* Header */
+.stats-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 2px dashed rgba(224, 170, 109, 0.7);
+}
+
+.stats-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0.3px;
+  color: var(--ink);
+  /* Optional if you already load Caveat elsewhere */
+  font-family: "Caveat", cursive;
+}
+
+/* Range dropdown */
+.range-selector {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  padding: 6px 30px 6px 10px;
+  border: 2px solid rgba(224, 170, 109, 0.9);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--paper);
   cursor: pointer;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.12);
+
+  /* simple dropdown arrow */
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--ink) 50%),
+    linear-gradient(135deg, var(--ink) 50%, transparent 50%),
+    linear-gradient(to right, transparent, transparent);
+  background-position:
+    calc(100% - 16px) 50%,
+    calc(100% - 10px) 50%,
+    0 0;
+  background-size: 6px 6px, 6px 6px, 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.range-selector:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(235, 170, 97, 0.35);
+}
+
+/* Loading / errors */
+.stats-loading,
+.stats-error,
+.stats-empty {
+  padding: 14px 10px;
+  text-align: center;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.stats-error {
+  color: #b3261e;
+  background: #fff1f0;
+  border: 2px solid rgba(179, 38, 30, 0.35);
+  border-radius: 10px;
+}
+
+/* List */
+.stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 10px;
+  border-radius: 10px;
+  background: var(--paper);
+  border: 2px solid rgba(224, 170, 109, 0.55);
+  box-shadow: var(--soft-shadow);
+}
+
+.stats-deck-name {
+  font-weight: 900;
+  color: var(--ink);
+  font-family: "Caveat", cursive;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.stats-counts {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 2px solid rgba(224, 170, 109, 0.55);
+  background: #fff;
+}
+
+/* Big percent pill */
+.stats-percentage {
+  font-weight: 900;
+  min-width: 52px;
+  text-align: center;
+  color: var(--ink);
+
+  padding: 4px 8px;
+  border-radius: 10px;
+  border: 2px solid rgba(224, 170, 109, 0.9);
+  background: linear-gradient(180deg, #fff7ea 0%, #ffe4be 100%);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* Logout button */
+.logout-button {
+  background: transparent;
+  border: 2px solid #d32f2f;
+  color: #d32f2f;
+  padding: 7px 14px;
+  border-radius: 10px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.12);
 }
 
 .logout-button:hover {
-  background-color: red;
-  color: white;
+  background-color: #d32f2f;
+  color: #fff;
 }

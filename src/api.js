@@ -113,3 +113,14 @@ export const updateCard = (cardId, front, back) =>
 
 export const deleteCard = (cardId) =>
   request(`/cards/${cardId}`, { method: "DELETE" });
+
+// Study
+export const logAnswer = (deckId, cardId, correct) =>
+  request("/study/answer", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ deck_id: deckId, card_id: cardId, correct }),
+  });
+
+export const getStats = (range) =>
+  request(`/study/stats?range=${range}`);

@@ -48,3 +48,18 @@ class CardOut(BaseModel):
 class CardUpdate(BaseModel):
     front: str
     back: str
+
+
+
+
+#=============================== STUDY / STATS =============================
+class AnswerLogIn(BaseModel):
+    deck_id: int
+    card_id: int
+    correct: bool
+
+class DeckStatsOut(BaseModel):
+    deck_id: int
+    deck_title: str
+    correct: int
+    wrong: int

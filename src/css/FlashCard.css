@@ -55,3 +55,48 @@
 .flash-card-back {
   transform: rotateY(180deg);
 }
+
+/* Answer buttons bar */
+.flash-card-answer-bar {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+}
+
+/* Answer buttons */
+.flash-card-answer-btn {
+  background-color: #ebaa61;
+  color: white;
+  border: 2px solid #333;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: "Caveat", cursive;
+  transition: all 0.2s ease;
+  min-width: 90px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.flash-card-answer-btn:hover {
+  background-color: #d99a51;
+  transform: translateY(-2px);
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.flash-card-answer-btn:active {
+  transform: translateY(0);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.flash-card-answer-btn.wrong:hover {
+  background-color: #c95a5a;
+}
+
+.flash-card-answer-btn.correct:hover {
+  background-color: #6ba86b;
+}

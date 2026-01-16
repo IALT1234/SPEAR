@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from database import Base, engine
-from routers import decks, cards
+from routers import decks, cards, study
 from routers.auth_routes import router as auth_router
 
 
@@ -32,6 +32,7 @@ def health():
 
 app.include_router(decks.router)
 app.include_router(cards.router)
+app.include_router(study.router)
 
 app.include_router(auth_router)
 
