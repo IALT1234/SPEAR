@@ -6,6 +6,8 @@ import NewDeckForm from "./NewDeckForm";
 import NewCardForm from "./NewCardForm";
 import EditDeckForm from "./EditDeckForm";
 import EditCardForm from "./EditCardForm";
+import { logAnswer } from "../api";
+
 
 function Current_Deck({
   deck,
@@ -21,6 +23,7 @@ function Current_Deck({
   setMode,
   updateDeckName,
   updateCardText,
+  
 }) {
   // ----------------------------
   // Slide animation state (for deck changes)
@@ -120,17 +123,6 @@ function Current_Deck({
 
 
 
-
-
-
-
-
-
-
-
-
-
-
   // ----------------------------
   // Mode-based UI (no early returns)
   // ----------------------------
@@ -225,7 +217,22 @@ function Current_Deck({
                       ? (cardDir === "next" ? "card-out-next" : "card-out-prev")
                       : (cardDir === "next" ? "card-in-next" : "card-in-prev")
                 }`}>
-                  <FlashCard key={renderCards[safeRenderIndex].id} card_front={renderCards[safeRenderIndex].front} card_back={renderCards[safeRenderIndex].back}/>
+                  <FlashCard
+                    key={renderCards[safeRenderIndex].id}
+                    card_front={renderCards[safeRenderIndex].front}
+                    card_back={renderCards[safeRenderIndex].back}
+                    onAnswer={async (isCorrect) => {
+                      try {
+                        await logAnswer(renderDeck.id, renderCards[safeRenderIndex].id, isCorrect);
+
+                        // optional but recommended so user sees something happen:
+                        nextCard(); // auto-advance after answering
+                      } catch (err) {
+                        console.error(err);
+                        alert(err.message || "Failed to save answer");
+                      }
+                    }}
+                  />
                 </div>
               </div>
             </div>
